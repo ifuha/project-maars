@@ -1,6 +1,6 @@
 namespace Api.Models;
 
-public class Comment
+public class Post
 {
   
 }
