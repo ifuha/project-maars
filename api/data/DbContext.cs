@@ -18,5 +18,7 @@ public class AppDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
+    modelBuilder.Entity<PostTag>()
+      .HasKey(pt => new { pt.PostId, pt.TagId });
   }
 }
