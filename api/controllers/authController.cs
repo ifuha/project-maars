@@ -24,18 +24,21 @@ public class AuthController : ControllerBase
   {
     if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
       return BadRequest("このメールアドレスはすでに使用されています");
+
     var user = new User
+
     {
       Name = dto.Name,
       Email = dto.Email,
       Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
     };
-
     _context.Users.Add(user);
     await _context.SaveChangesAsync();
     return Ok(new { user.UserId, user.Name, user.Email });
   }
+
   [HttpGet("login")]
+
   public async Task<ActionResult> Login(LoginDto dto)
   {
     var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
