@@ -20,8 +20,6 @@ builder.Services.AddCors(options => {
         p.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod());
 });
 
-var app = builder.Build();
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -37,6 +35,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
     });
+
+var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
