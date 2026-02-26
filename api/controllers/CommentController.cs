@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Api.Data;
 using Api.Models;
 
@@ -22,6 +23,7 @@ public class CommentController : Controller
       .Where(c => c.PostId == postId)
       .ToListAsync();
   }
+  [Authorize]
   [HttpPost]
   public async Task<ActionResult<Comment>> CreateComment(Comment comment)
   {
@@ -29,6 +31,7 @@ public class CommentController : Controller
     await _context.SaveChangesAsync();
     return Ok(comment);
   }
+  [Authorize]
   [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteComment(int id)
     {

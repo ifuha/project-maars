@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Api.Data;
 using Api.Models;
 
@@ -29,7 +30,7 @@ public class TagController : ControllerBase
         if (tag == null) return NotFound();
         return tag;
     }
-
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Tag>> CreateTag(Tag tag)
     {
@@ -40,7 +41,7 @@ public class TagController : ControllerBase
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetTag), new { id = tag.TagId }, tag);
     }
-
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTag(int id)
     {

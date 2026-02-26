@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Api.Data;
 using Api.Models;
 
@@ -20,6 +21,7 @@ public class TreeController : ControllerBase
     var count = await _context.Trees.CountAsync(t => t.PostId == postId);
     return Ok(new { postId, count });
   }
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult> CreateTree(Tree tree)
     {
@@ -30,6 +32,7 @@ public class TreeController : ControllerBase
       await UpdateTopic(tree.PostId);
     return Ok(tree);
     }
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTree(int id)
     {

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Api.Data;
 using Api.Models;
+
 
 namespace Api.Controllers;
 
@@ -49,6 +51,7 @@ public class PostController : ControllerBase
       .Include(p => p.Comments)
       .ToListAsync();
   }
+  [Authorize]
   [HttpPost]
   public async Task<ActionResult<Post>> CreatePost(Post post)
   {
@@ -56,6 +59,7 @@ public class PostController : ControllerBase
       await _context.SaveChangesAsync();
       return CreatedAtAction(nameof(GetPost), new { id = post.PostId }, post);
   }
+  [Authorize]
   [HttpPut("{id}")]
   public async Task<ActionResult> UpdataPost(int id, Post post)
   {
@@ -72,6 +76,7 @@ public class PostController : ControllerBase
       }
     return NoContent();
   }
+  [Authorize]
   [HttpDelete("{id}")]
   public async Task<IActionResult> DeletePost(int id)
   {
