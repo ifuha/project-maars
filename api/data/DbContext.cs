@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
   public DbSet<Topic> Topics => Set<Topic>();
   public DbSet<Tag> Tags => Set<Tag>();
   public DbSet<PostTag> PostTags => Set<PostTag>();
-
+  public DbSet<MarsWeather> MarsWeathers => Set<MarsWeather>();
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
