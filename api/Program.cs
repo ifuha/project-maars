@@ -44,6 +44,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+app.UseCors("NextAppPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 

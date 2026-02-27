@@ -37,7 +37,7 @@ public class AuthController : ControllerBase
     return Ok(new { user.UserId, user.Name, user.Email });
   }
 
-  [HttpGet("login")]
+  [HttpPost("login")]
 
   public async Task<ActionResult> Login(LoginDto dto)
   {
