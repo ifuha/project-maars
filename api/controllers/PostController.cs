@@ -53,11 +53,19 @@ public class PostController : ControllerBase
   }
   [Authorize]
   [HttpPost]
-  public async Task<ActionResult<Post>> CreatePost(Post post)
+  public async Task<ActionResult<Post>> CreatePost(Post dto)
   {
+    var post = new Post
+    {
+        UserId = dto.UserId,
+        Title = dto.Title,
+        Content = dto.Content,
+        Thumbnail = dto.Thumbnail,
+        IsPrivate = dto.IsPrivate
+    };
     _context.Posts.Add(post);
-      await _context.SaveChangesAsync();
-      return CreatedAtAction(nameof(GetPost), new { id = post.PostId }, post);
+    await _context.SaveChangesAsync();
+    return CreatedAtAction(nameof(GetPost), new { id = post.PostId }, post);
   }
   [Authorize]
   [HttpPut("{id}")]
@@ -86,4 +94,5 @@ public class PostController : ControllerBase
     await _context.SaveChangesAsync();
     return NoContent();
   }
+  public record CreatePostDto(int UserId, string Title, string Content, string Thumbnail, bool IsPrivate);
 }

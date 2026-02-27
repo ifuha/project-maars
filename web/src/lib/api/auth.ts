@@ -25,6 +25,7 @@ export const register = (dto: RegisterDto) =>
 
 export const login = async (dto: LoginDto) => {
   const res = await api<LoginResponse>("/api/auth/login", "POST", dto);
+  console.log(res);
   setToken(res.token);
   return res;
 };

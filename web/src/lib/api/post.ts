@@ -1,6 +1,14 @@
 import { api } from "../utils/fecth-api";
 import { Post } from "./type";
 
+type CreatePostDto = {
+  userId: number;
+  title: string;
+  content: string;
+  thumbnail: string;
+  isPrivate: boolean;
+};
+
 export const getPosts = () => api<Post[]>("/api/post");
 
 export const getPost = (id: number) => api<Post>(`/api/post/${id}`);

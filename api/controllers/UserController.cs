@@ -18,11 +18,13 @@ public class UserController : ControllerBase
     _context = context;
   }
   [HttpGet]
+  [AllowAnonymous]
   public async Task<ActionResult<IEnumerable<User>>> GetUsers()
   {
     return await _context.Users.ToListAsync();
   }
   [HttpGet("{id}")]
+  [AllowAnonymous]
   public async Task<ActionResult<User>> GetUser(int id)
   {
     var user = await _context.Users.FindAsync(id);

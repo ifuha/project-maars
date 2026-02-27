@@ -7,7 +7,7 @@ using System.Text;
 using Api.Data;
 using Api.Models;
 
-namespace Api.Models;
+namespace Api.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
