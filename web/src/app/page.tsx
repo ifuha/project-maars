@@ -27,14 +27,14 @@ const testPosts: Post[] = [
     postId: 2,
     userId: 2,
     title: "テスト投稿2",
-    content: "テストコンテンツ2",
+    content: "https://tailwindcss.com/",
     thumbnail: "https://picsum.photos/400/200?random=2",
     isPrivate: false,
     user: {
       userId: 2,
       name: "テストユーザー2",
       email: "test2@test.com",
-      icon: "https://picsum.photos/24/24?random=2",
+      icon: "",
       header: "",
       posts: [],
       trees: [],
@@ -49,7 +49,7 @@ export default function Home() {
   // const posts = getPosts();
   return (
     <div>
-      <div className="grid grid-cols-3 gap-4 p-8">
+      <div className="flex flex-col items-center justify-center gap-4">
         {testPosts.map((post) => (
           <PostCard key={post.postId} post={post} />
         ))}
