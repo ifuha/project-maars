@@ -32,11 +32,16 @@ function LoginPage() {
           />
         </div>
         <div className="absolute inset-0 z-10 flex justify-start text-white font-bold text-9xl wrap-break-word">
-          <div className="w-150 p-4">spaceship and head to Maars!!</div>
+          <div className="w-170 p-4">Spaceship And Head To Maars!!</div>
         </div>
         <div className="relative z-10 flex justify-end items-center min-h-svh">
           <div className="flex flex-col items-center justify-center h-svh gap-12 bg-white rounded-l-3xl p-12 font-bold">
-            ログイン
+            <div className="flex items-center">
+              ログイ
+              <a href="/" className="hover:text-orange-400">
+                ン
+              </a>
+            </div>
             {error && <div className="text-red-500">{error}</div>}
             <input
               type="email"
@@ -46,6 +51,7 @@ function LoginPage() {
               className="bg-white border border-orange-400 rounded-xl p-2 w-80"
             />
             <input
+              type="password"
               placeholder="パスワード"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
