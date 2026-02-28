@@ -17,15 +17,21 @@ public class PostController : ControllerBase
     _context = context;
   }
   [HttpGet]
-  public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+  public async Task<ActionResult<IEnumerable<Post>>> GetPosts([FromQuery] int? tagId)
   {
-    return await _context.Posts
-      .Where(p => !p.IsPrivate)
+    var query = _context.Posts
+        .Where(p => !p.IsPrivate)
         .Include(p => p.User)
         .Include(p => p.PostTags)
           .ThenInclude(pt => pt.Tag)
         .Include(p => p.Comments)
-      .ToListAsync();
+        .AsQueryable();
+
+    if (tagId.HasValue)
+    {
+      query = query.Where(p => p.PostTags.Any(pt => pt.TagId == tagId.Value));
+    }
+    return await query.ToListAsync();
   }
   [HttpGet("{id}")]
   public async Task<ActionResult<Post>> GetPost(int id)

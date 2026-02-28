@@ -9,7 +9,8 @@ type CreatePostDto = {
   isPrivate: boolean;
 };
 
-export const getPosts = () => api<Post[]>("/api/post");
+export const getPosts = (tagId?: number) =>
+  api<Post[]>(tagId ? `/api/post?tagId=${tagId}` : "/api/post");
 
 export const getPost = (id: number) => api<Post>(`/api/post/${id}`);
 
