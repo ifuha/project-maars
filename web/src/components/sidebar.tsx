@@ -35,29 +35,54 @@ export default function SideBar() {
             </div>
           </div>
         </Link>
-        <Link href={"/explore"}>検索</Link>
+        <Link href={"/explore"}>
+          <div className="flex items-center justify-between gap-2">
+            <Image src={"/search.svg"} alt="search" width={40} height={40} />
+            <div className={cn(pathname == "/explore" && "text-orange-400")}>
+              検索
+            </div>
+          </div>
+        </Link>
         {userId && (
           <Link href={"/post/create"}>
-            <div
-              className={cn(pathname == "/post/create" && "text-orange-400")}
-            >
-              投稿
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/post.svg"} alt="post" width={40} height={40} />
+              <div
+                className={cn(pathname == "/post/create" && "text-orange-400")}
+              >
+                投稿
+              </div>
             </div>
           </Link>
         )}
         {userId && (
           <Link href={`/user/${userId}`}>
-            <div
-              className={cn(pathname == `/user/${userId}` && "text-orange-400")}
-            >
-              プロフィール
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/user.svg"} alt="profile" width={40} height={40} />
+              <div
+                className={cn(
+                  pathname == `/user/${userId}` && "text-orange-400",
+                )}
+              >
+                プロフィール
+              </div>
             </div>
           </Link>
         )}
         {userId ? (
-          <button onClick={handleLogout}>ログアウト</button>
+          <button onClick={handleLogout}>
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/log-out.svg"} alt="logOut" width={40} height={40} />
+              ログアウト
+            </div>
+          </button>
         ) : (
-          <Link href="/login">ログイン</Link>
+          <Link href="/login">
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/log-in.svg"} alt="logIn" width={40} height={40} />
+              ログイン
+            </div>
+          </Link>
         )}
       </div>
     </div>
