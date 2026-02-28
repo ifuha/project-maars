@@ -43,25 +43,34 @@ export default function PostCard({ post }: Props) {
                   setIsOpen(true);
                 }}
               >
-                <Image
-                  src={post.thumbnail || "/rocket.svg"}
-                  alt={post.title}
-                  width={400}
-                  height={200}
-                  className="object-cover rounded-2xl"
-                />
+                {post.thumbnail && (
+                  <div
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsOpen(true);
+                    }}
+                  >
+                    <Image
+                      src={post.thumbnail}
+                      alt={post.title}
+                      width={400}
+                      height={200}
+                      className="object-cover rounded-2xl"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </Link>
-      {isOpen && (
+      {isOpen && post.thumbnail && (
         <div
           className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50"
           onClick={() => setIsOpen(false)}
         >
           <Image
-            src={post.thumbnail || "/rocket.svg"}
+            src={post.thumbnail}
             alt={post.title}
             width={800}
             height={600}

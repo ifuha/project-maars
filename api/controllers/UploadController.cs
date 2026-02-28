@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Amazon.S3;
-using Amazon.S3.Transfer;
-using Amazon;
+using Amazon.S3.Model;
 
 namespace Api.Controllers;
 
@@ -21,35 +20,36 @@ public class UploadController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Upload(IFormFile file)
     {
-      var bucketName = _config["R2:BucketName"];
-      var accountId = _config["R2:AccountId"];
-      var accessKeyId = _config["R2:AccessKeyId"];
-      var secretAccessKey = _config["R2:SecretAccessKey"];
+        var bucketName = _config["R2:BucketName"];
+        var accountId = _config["R2:AccountId"];
+        var accessKeyId = _config["R2:AccessKeyId"];
+        var secretAccessKey = _config["R2:SecretAccessKey"];
 
-      var s3Client = new AmazonS3Client(
-        accessKeyId,
-        secretAccessKey,
-        new AmazonS3Config
+        var s3Client = new AmazonS3Client(
+            accessKeyId,
+            secretAccessKey,
+            new AmazonS3Config
+            {
+                ServiceURL = $"https://{accountId}.r2.cloudflarestorage.com",
+                ForcePathStyle = true,
+            }
+        );
+
+        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+
+        using var stream = file.OpenReadStream();
+        var request = new PutObjectRequest
         {
-          ServiceURL = $"https://{accountId}.r2.cloudflarestorage.com",
-          ForcePathStyle = true
-        }
-      );
-
-      var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-    
-      using var stream = file.OpenReadStream();
-
-      var uploadRequest = new TransferUtilityUploadRequest
-        {
-          InputStream = stream,
-          Key = fileName,
-          BucketName = bucketName,
-          ContentType = file.ContentType
+            BucketName = bucketName,
+            Key = fileName,
+            InputStream = stream,
+            ContentType = file.ContentType,
+            DisablePayloadSigning = true
         };
-        var transferUtility = new TransferUtility(s3Client);
-        await transferUtility.UploadAsync(uploadRequest);
-        var url = $"https://{accountId}.r2.cloudflarestorage.com/{bucketName}/{fileName}";
+
+        await s3Client.PutObjectAsync(request);
+
+        var url = $"https://pub-{accountId}.r2.dev/{bucketName}/{fileName}";
         return Ok(new { url });
     }
 }

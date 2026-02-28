@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "FLYnIfpQ1jw=",
+  "dgSpecHash": "MSSN1JEfStk=",
   "success": true,
   "projectFilePath": "/Users/itou/Documents/project-mars/api/api.csproj",
   "expectedPackageFiles": [
-    "/Users/itou/.nuget/packages/awssdk.core/4.0.3.15/awssdk.core.4.0.3.15.nupkg.sha512",
-    "/Users/itou/.nuget/packages/awssdk.s3/4.0.18.7/awssdk.s3.4.0.18.7.nupkg.sha512",
+    "/Users/itou/.nuget/packages/awssdk.core/3.7.100/awssdk.core.3.7.100.nupkg.sha512",
+    "/Users/itou/.nuget/packages/awssdk.s3/3.7.100/awssdk.s3.3.7.100.nupkg.sha512",
     "/Users/itou/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/Users/itou/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",
     "/Users/itou/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",

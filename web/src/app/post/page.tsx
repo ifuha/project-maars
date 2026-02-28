@@ -89,7 +89,6 @@ export default function PostPage() {
         ))}
       </div>
 
-      {/* いいね */}
       <div className="flex items-center gap-2">
         <button
           onClick={handleTree}
@@ -99,7 +98,6 @@ export default function PostPage() {
         </button>
       </div>
 
-      {/* コメント */}
       <div className="w-full max-w-2xl flex flex-col gap-4">
         <h2 className="text-xl font-bold">コメント</h2>
         {comments.map((comment) => (

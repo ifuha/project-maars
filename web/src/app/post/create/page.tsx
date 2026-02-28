@@ -7,6 +7,7 @@ import { createPostTag } from "@/lib/api/postTag";
 import { useRouter } from "next/navigation";
 import { Tag } from "@/lib/api/type";
 import { getUserId } from "@/lib/utils/access-token";
+import { uploadFile } from "@/lib/api/upLoad";
 
 function CreatePostPage() {
   const router = useRouter();
@@ -18,6 +19,7 @@ function CreatePostPage() {
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const [newTagName, setNewTagName] = useState("");
   const [error, setError] = useState("");
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
 
   useEffect(() => {
     getTags().then(setTags);
@@ -50,6 +52,10 @@ function CreatePostPage() {
       if (!userId) {
         setError("ログインが必要です");
         return;
+      }
+      let thumbnailUrl = "";
+      if (thumbnailFile) {
+        thumbnailUrl = await uploadFile(thumbnailFile);
       }
       const post = await createPost({
         title,
@@ -85,9 +91,9 @@ function CreatePostPage() {
         </div>
         <div className="flex flex-col items-center justify-end gap-12">
           <input
-            type="text"
-            placeholder="サムネイルURL"
-            onChange={(e) => setThumbnail(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
             className="border border-orange-400 rounded-2xl w-100 h-50 p-4"
           />
           <label>
