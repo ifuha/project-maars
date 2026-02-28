@@ -58,7 +58,6 @@ export default function PostPage() {
 
   return (
     <div className="flex flex-col items-center gap-8 p-8">
-      {/* ユーザー情報 */}
       <div className="flex items-center gap-2">
         <Image
           src={post.user.icon || "/rocket.svg"}
@@ -70,7 +69,6 @@ export default function PostPage() {
         <span>{post.user.name}</span>
       </div>
 
-      {/* 投稿内容 */}
       <h1 className="text-2xl font-bold">{post.title}</h1>
       {post.thumbnail && (
         <Image
@@ -83,7 +81,6 @@ export default function PostPage() {
       )}
       <p className="w-full max-w-2xl">{post.content}</p>
 
-      {/* タグ */}
       <div className="flex gap-2">
         {post.postTags.map((pt) => (
           <span
@@ -95,7 +92,6 @@ export default function PostPage() {
         ))}
       </div>
 
-      {/* いいね */}
       <button
         onClick={handleTree}
         className="border border-orange-400 rounded-2xl px-4 py-2"
@@ -103,7 +99,6 @@ export default function PostPage() {
         🌳 {treeCount}
       </button>
 
-      {/* コメント */}
       <div className="w-full max-w-2xl flex flex-col gap-4">
         <h2 className="text-xl font-bold">コメント</h2>
         {comments.map((comment) => (
