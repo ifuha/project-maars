@@ -41,13 +41,14 @@ public class PostController : ControllerBase
     if (post.IsPrivate) return Forbid();
       return post;
   }
-  [HttpGet("/user/{userId}")]
+  [HttpGet("user/{userId}")]
   public async Task<ActionResult<IEnumerable<Post>>> GetPostsByUser(int userId)
   {
     var currentUserIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
     var currentUserId = currentUserIdClaim != null ? int.Parse(currentUserIdClaim) : (int?)null;
     return await _context.Posts
       .Where(p => p.UserId == userId && (!p.IsPrivate || currentUserId == userId))
+      .Include(p => p.User)
       .Include(p => p.PostTags)
         .ThenInclude(pt => pt.Tag)
       .Include(p => p.Comments)
