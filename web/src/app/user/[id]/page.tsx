@@ -32,16 +32,18 @@ export default function UserPage() {
   return (
     <div>
       <div className="flex flex-col items-center gap-8">
-        <div className=" border-r border-l border-orange-100 p-4 h-screen">
-          {user.header && (
-            <Image
-              src={user.header}
-              alt="header"
-              width={1200}
-              height={300}
-              className="w-full object-cover h-48"
-            />
-          )}
+        <div className="border-r border-l border-orange-100 p-4 min-h-screen">
+          <div className="py-4">
+            {user.header && (
+              <Image
+                src={user.header}
+                alt="header"
+                width={600}
+                height={300}
+                className="w-full object-cover h-48 rounded-2xl"
+              />
+            )}
+          </div>
 
           <div className="flex flex-col items-center gap-2">
             <div className="rounded-full overflow-hidden w-10 h-10">
@@ -55,6 +57,7 @@ export default function UserPage() {
             </div>
             <div className="text-2xl font-bold">{user.name}</div>
           </div>
+          <div className="py-8" />
           <div className="flex flex-col items-center justify-center gap-4">
             {posts.map((post) => (
               <div key={post.postId} className="relative">
