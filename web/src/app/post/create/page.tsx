@@ -60,7 +60,7 @@ function CreatePostPage() {
       const post = await createPost({
         title,
         content,
-        thumbnail,
+        thumbnail: thumbnailUrl,
         isPrivate,
         userId,
       });

@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "picsum.photos",
       },
+      {
+        protocol: "https",
+        hostname: "pub-be646ec5183a4105a22a3ba4770c0bd9.r2.dev",
+      },
     ],
   },
   async rewrites() {

@@ -49,7 +49,7 @@ public class UploadController : ControllerBase
 
         await s3Client.PutObjectAsync(request);
 
-        var url = $"https://pub-{accountId}.r2.dev/{bucketName}/{fileName}";
+        var url = $"https://pub-be646ec5183a4105a22a3ba4770c0bd9.r2.dev/{fileName}";
         return Ok(new { url });
     }
 }
