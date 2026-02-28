@@ -64,13 +64,14 @@ export default function PostPage() {
       </div>
       <div className="flex flex-col items-center gap-8 p-8">
         <div className="flex items-center gap-2">
-          <Image
-            src={post.user.icon || "/rocket.svg"}
-            alt={post.user.name}
-            width={40}
-            height={40}
-            className="rounded-full border border-orange-400"
-          />
+          <div className="rounded-full overflow-hidden w-10 h-10 relative">
+            <Image
+              src={post.user.icon || "/rocket.svg"}
+              alt={post.user.name}
+              fill
+              className="object-cover"
+            />
+          </div>
           <span>{post.user.name}</span>
         </div>
 

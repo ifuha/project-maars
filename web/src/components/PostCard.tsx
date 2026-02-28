@@ -24,13 +24,15 @@ export default function PostCard({ post }: Props) {
         <div className="flex flex-col items-start justify-start gap-4 rounded-2xl">
           <div className="flex items-center justify-center">
             <div className="me-4">
-              <Image
-                src={post.user.icon || "/rocket.svg"}
-                alt={post.user.name}
-                width={32}
-                height={32}
-                className="rounded-full object-scale-down border border-orange-400"
-              />
+              <div className="rounded-full overflow-hidden w-10 h-10">
+                <Image
+                  src={post.user.icon || "/rocket.svg"}
+                  alt={post.user.name}
+                  width={32}
+                  height={32}
+                  className="rounded-full overflow-hidden w-full h-full border border-orange-400"
+                />
+              </div>
             </div>
             {post.user.name}
           </div>

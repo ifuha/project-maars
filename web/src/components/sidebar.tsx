@@ -102,18 +102,17 @@ export default function SideBar() {
           </Link>
         )}
         <div className="border-t border-orange-400 w-full">
-          <Link href={"/"}>
+          <Link href={"/user/edit"}>
             {user && (
-              <div className="flex items-center justify-start gap-2 py-2">
-                <div>
-                  {user.icon || (
-                    <Image
-                      src={"/rocket.svg"}
-                      alt="Icon"
-                      width={40}
-                      height={40}
-                    ></Image>
-                  )}
+              <div className="flex items-center justify-start gap-2 py-4">
+                <div className="rounded-full overflow-hidden w-10 h-10">
+                  <Image
+                    src={user.icon || "/rocket.svg"}
+                    alt="Icon"
+                    width={40}
+                    height={40}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
                 <div>{user.name}</div>
               </div>
