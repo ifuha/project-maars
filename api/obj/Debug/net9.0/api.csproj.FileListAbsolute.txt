@@ -183,3 +183,5 @@
 /Users/itou/Documents/project-mars/api/obj/Debug/net9.0/api.pdb
 /Users/itou/Documents/project-mars/api/obj/Debug/net9.0/api.genruntimeconfig.cache
 /Users/itou/Documents/project-mars/api/obj/Debug/net9.0/ref/api.dll
+/Users/itou/Documents/project-mars/api/bin/Debug/net9.0/AWSSDK.Core.dll
+/Users/itou/Documents/project-mars/api/bin/Debug/net9.0/AWSSDK.S3.dll

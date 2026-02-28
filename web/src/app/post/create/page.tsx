@@ -44,8 +44,8 @@ function CreatePostPage() {
   };
 
   const handleSubmit = async () => {
+    console.log("handleSubmit called");
     const userId = getUserId();
-    console.log({ title, content, thumbnail, isPrivate, userId });
     try {
       if (!userId) {
         setError("ログインが必要です");
