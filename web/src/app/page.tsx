@@ -18,7 +18,10 @@ export default function Home() {
         <div className="border-r border-orange-100 border-l p-4">
           {posts.map((post) => (
             <div key={post.postId} className="py-2">
-              <PostCard post={post} />
+              <div className="hover:bg-orange-50 p-4 rounded-2xl">
+                <PostCard post={post} />
+                <div className="border-b border-orange-400" />
+              </div>
             </div>
           ))}
         </div>
