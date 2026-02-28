@@ -7,12 +7,21 @@ import { usePathname } from "next/navigation";
 import { getUserId, removeToken } from "@/lib/utils/access-token";
 import { cn } from "@/lib/utils/cn";
 import { useEffect, useState } from "react";
+import type { User } from "@/lib/api/type";
+import { getUser } from "@/lib/api/user";
 
 export default function SideBar() {
   const router = useRouter();
   const pathname = usePathname();
 
   const [userId, setUserId] = useState<number | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const id = getUserId();
+    setUserId(id);
+    if (id) getUser(id).then(setUser);
+  }, []);
 
   useEffect(() => {
     setUserId(getUserId());
@@ -32,6 +41,14 @@ export default function SideBar() {
             <Image src={"/rocket.svg"} alt="logo" width={40} height={40} />
             <div className={cn(pathname == "/" && "text-orange-400")}>
               Rocket
+            </div>
+          </div>
+        </Link>
+        <Link href={"/topic"}>
+          <div className="flex items-center justify-between gap-2">
+            <Image src={"/sparkle.svg"} alt="search" width={40} height={40} />
+            <div className={cn(pathname == "/topic" && "text-orange-400")}>
+              トピック
             </div>
           </div>
         </Link>
@@ -84,6 +101,25 @@ export default function SideBar() {
             </div>
           </Link>
         )}
+        <div className="border-t border-orange-400 w-full">
+          <Link href={"/"}>
+            {user && (
+              <div className="flex items-center justify-start gap-2 py-2">
+                <div>
+                  {user.icon || (
+                    <Image
+                      src={"/rocket.svg"}
+                      alt="Icon"
+                      width={40}
+                      height={40}
+                    ></Image>
+                  )}
+                </div>
+                <div>{user.name}</div>
+              </div>
+            )}
+          </Link>
+        </div>
       </div>
     </div>
   );

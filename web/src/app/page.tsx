@@ -20,7 +20,6 @@ export default function Home() {
             <div key={post.postId} className="py-2">
               <div className="hover:bg-orange-50 p-4 rounded-2xl">
                 <PostCard post={post} />
-                <div className="border-b border-orange-400" />
               </div>
             </div>
           ))}

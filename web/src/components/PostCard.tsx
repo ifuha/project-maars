@@ -19,9 +19,9 @@ export default function PostCard({ post }: Props) {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen]);
   return (
-    <div>
+    <div className="border-b border-orange-400">
       <Link href={`/post/${post.postId}`}>
-        <div className="flex flex-col items-start justify-start gap-4 rounded-2xl w-150">
+        <div className="flex flex-col items-start justify-start gap-4 rounded-2xl">
           <div className="flex items-center justify-center">
             <div className="me-4">
               <Image
@@ -34,31 +34,33 @@ export default function PostCard({ post }: Props) {
             </div>
             {post.user.name}
           </div>
-          <div className="w-100">
-            <div className="flex flex-col gap-4">
-              <div className="wrap-break-word">{post.content}</div>
-              <div
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsOpen(true);
-                }}
-              >
-                {post.thumbnail && (
-                  <div
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsOpen(true);
-                    }}
-                  >
-                    <Image
-                      src={post.thumbnail}
-                      alt={post.title}
-                      width={400}
-                      height={200}
-                      className="object-cover rounded-2xl"
-                    />
-                  </div>
-                )}
+          <div className="py-2">
+            <div className="w-100">
+              <div className="flex flex-col gap-4">
+                <div className="wrap-break-word">{post.content}</div>
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(true);
+                  }}
+                >
+                  {post.thumbnail && (
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsOpen(true);
+                      }}
+                    >
+                      <Image
+                        src={post.thumbnail}
+                        alt={post.title}
+                        width={400}
+                        height={200}
+                        className="object-cover rounded-2xl"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

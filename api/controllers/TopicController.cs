@@ -14,6 +14,13 @@ public class TopicController : Controller
   {
     _context = context;
   }
+  [HttpGet]
+  public async Task<ActionResult<IEnumerable<Topic>>> GetTopics()
+  {
+      return await _context.Topics
+      .OrderBy(t => t.Order)
+      .ToListAsync();
+  }
   [HttpGet("tree/{treeId}")]
   public async Task<ActionResult<IEnumerable<Topic>>> GetTopicsByTree(int treeId)
   {
