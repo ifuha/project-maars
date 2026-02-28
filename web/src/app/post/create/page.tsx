@@ -1,5 +1,6 @@
 "use client";
 
+import SideBar from "@/components/sidebar";
 import { useState, useEffect } from "react";
 import { createPost } from "@/lib/api/post";
 import { createTag, getTags } from "@/lib/api/tag";
@@ -75,62 +76,64 @@ function CreatePostPage() {
     }
   };
   return (
-    <div className="flex justify-center">
-      <div className="flex justify-between items-center h-svh gap-35">
-        <div className="flex flex-col items-center justify-end gap-4">
-          <input
-            type="text"
-            placeholder="タイトル"
-            onChange={(e) => setTitle(e.target.value)}
-            className="border border-orange-400 rounded-2xl p-2"
-          />
-          <textarea
-            onChange={(e) => setContent(e.target.value)}
-            className="border border-orange-400 w-100 h-100 rounded-2xl p-2"
-          />
-        </div>
-        <div className="flex flex-col items-center justify-end gap-12">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
-            className="border border-orange-400 rounded-2xl w-100 h-50 p-4"
-          />
-          <label>
-            公開/非公開
-            <input
-              type="checkbox"
-              onChange={(e) => setIsPrivate(e.target.checked)}
-              className="border border-orange-400 rounded-2xl p-2"
-            />
-          </label>
-          <div className="flex items-center justify-center gap-2">
-            {tags.map((tag) => (
-              <button key={tag.tagId} onClick={() => toggleTag(tag.tagId)}>
-                {tag.name}
-              </button>
-            ))}
+    <div>
+      <div className="flex justify-center">
+        <div className="flex justify-between items-center h-svh gap-35">
+          <div className="flex flex-col items-center justify-end gap-4">
             <input
               type="text"
-              placeholder="新規タグ名"
-              value={newTagName}
-              onChange={(e) => setNewTagName(e.target.value)}
+              placeholder="タイトル"
+              onChange={(e) => setTitle(e.target.value)}
               className="border border-orange-400 rounded-2xl p-2"
             />
+            <textarea
+              onChange={(e) => setContent(e.target.value)}
+              className="border border-orange-400 w-100 h-100 rounded-2xl p-2"
+            />
+          </div>
+          <div className="flex flex-col items-center justify-end gap-12">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
+              className="border border-orange-400 rounded-2xl w-100 h-50 p-4"
+            />
+            <label>
+              公開/非公開
+              <input
+                type="checkbox"
+                onChange={(e) => setIsPrivate(e.target.checked)}
+                className="border border-orange-400 rounded-2xl p-2"
+              />
+            </label>
+            <div className="flex items-center justify-center gap-2">
+              {tags.map((tag) => (
+                <button key={tag.tagId} onClick={() => toggleTag(tag.tagId)}>
+                  {tag.name}
+                </button>
+              ))}
+              <input
+                type="text"
+                placeholder="新規タグ名"
+                value={newTagName}
+                onChange={(e) => setNewTagName(e.target.value)}
+                className="border border-orange-400 rounded-2xl p-2"
+              />
+              <button
+                onClick={handleAddTag}
+                className="border border-orange-400 rounded-2xl p-2"
+              >
+                追加
+              </button>
+            </div>
             <button
-              onClick={handleAddTag}
+              onClick={handleSubmit}
               className="border border-orange-400 rounded-2xl p-2"
             >
-              追加
+              投稿する
             </button>
+            {error && <div className="text-red-400">{error}</div>}
           </div>
-          <button
-            onClick={handleSubmit}
-            className="border border-orange-400 rounded-2xl p-2"
-          >
-            投稿する
-          </button>
-          {error && <div className="text-red-400">{error}</div>}
         </div>
       </div>
     </div>

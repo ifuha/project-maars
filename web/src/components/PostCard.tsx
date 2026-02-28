@@ -4,6 +4,7 @@ import { Post } from "@/lib/api/type";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import SideBar from "./sidebar";
 
 type Props = {
   post: Post;
@@ -21,7 +22,7 @@ export default function PostCard({ post }: Props) {
   return (
     <div>
       <Link href={`/post/${post.postId}`}>
-        <div className="flex flex-col items-start justify-start gap-4">
+        <div className="flex flex-col items-start justify-start gap-4 hover:bg-orange-50 p-4 rounded-2xl">
           <div className="flex items-center justify-center">
             <div className="me-4">
               <Image
@@ -59,6 +60,7 @@ export default function PostCard({ post }: Props) {
                     />
                   </div>
                 )}
+                <div className="border-b border-orange-300 p-2" />
               </div>
             </div>
           </div>
