@@ -48,7 +48,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddCors(options => {
     options.AddPolicy("NextAppPolicy", p => 
-        p.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod());
+        p.WithOrigins("http://localhost:3000", "https://maars.dev", "https://www.maars.dev")
+        .AllowAnyHeader().AllowAnyMethod());
 });
 
 builder.Services.AddControllers().AddJsonOptions(options =>
