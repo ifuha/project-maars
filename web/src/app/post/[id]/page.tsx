@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { getPost } from "@/lib/api/post";
 import { getCommentsByPost, createComment } from "@/lib/api/comment";
+import { cn } from "@/lib/utils/cn";
 import {
   getTreesByPost,
   createTree,
@@ -117,7 +118,7 @@ export default function PostPage() {
             className="object-cover rounded-2xl"
           />
         )}
-        <p className="w-full max-w-2xl">{post.content}</p>
+        <p className="w-full max-w-2xl wrap-break-word">{post.content}</p>
 
         <div className="flex gap-2">
           {post.postTags.map((pt) => (
@@ -130,11 +131,16 @@ export default function PostPage() {
           ))}
         </div>
 
-        <button
-          onClick={handleTree}
-          className="border border-orange-400 rounded-2xl px-4 py-2"
-        >
-          {treeCount}
+        <button onClick={handleTree}>
+          <div className="flex items-center justify-center gap-2">
+            <Image
+              src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
+              alt="tree"
+              width={20}
+              height={20}
+            />
+            {treeCount}
+          </div>
         </button>
         <div className="text-xl font-bold">コメント</div>
         <div className="w-full max-w-2xl flex flex-col gap-4">

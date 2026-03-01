@@ -6,7 +6,7 @@ import { getUser, updateUser } from "@/lib/api/user";
 import { getUserId } from "@/lib/utils/access-token";
 import { uploadFile } from "@/lib/api/upLoad";
 import type { User } from "@/lib/api/type";
-import Link from "next/link";
+import Image from "next/image";
 
 export default function EditUserPage() {
   const router = useRouter();
@@ -14,6 +14,8 @@ export default function EditUserPage() {
   const [name, setName] = useState("");
   const [iconFile, setIconFile] = useState<File | null>(null);
   const [headerFile, setHeaderFile] = useState<File | null>(null);
+  const [iconPreview, setIconPreview] = useState<string | null>(null);
+  const [headerPreview, setHeaderPreview] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -25,8 +27,26 @@ export default function EditUserPage() {
     getUser(userId).then((u) => {
       setUser(u);
       setName(u.name);
+      setIconPreview(u.icon || null);
+      setHeaderPreview(u.header || null);
     });
-  }, []);
+  }, [router]);
+
+  const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setIconFile(file);
+      setIconPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleHeaderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setHeaderFile(file);
+      setHeaderPreview(URL.createObjectURL(file));
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -52,45 +72,66 @@ export default function EditUserPage() {
     }
   };
 
-  if (!user) return <div>読み込み中...</div>;
+  if (!user)
+    return <div className="flex justify-center p-10">読み込み中...</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-      <h1 className="text-2xl font-bold">プロフィール編集</h1>
-      {error && <p className="text-red-400">{error}</p>}
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="名前"
-        className="border border-orange-400 rounded-2xl p-2 w-80"
-      />
-      <div className="flex flex-col gap-2 w-80">
-        <label>アイコン画像</label>
+    <div className="max-w-xl mx-auto p-6 space-y-8">
+      <div className="text-2xl font-bold flex items-centerr justify-center">
+        プロフィール編集
+      </div>
+
+      {error && <p className="text-red-500 text-center">{error}</p>}
+
+      <div>
+        <div className="relative w-full h-40 bg-gray-100">
+          {headerPreview && (
+            <Image
+              src={headerPreview}
+              alt="Header"
+              fill
+              className="object-cover"
+            />
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleHeaderChange}
+            className="absolute inset-0 opacity-0 cursor-pointer"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-orange-400">
+          {iconPreview && (
+            <Image src={iconPreview} alt="Icon" fill className="object-cover" />
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleIconChange}
+            className="absolute inset-0 opacity-0 cursor-pointer"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <label className="text-sm font-bold text-gray-600">名前</label>
         <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setIconFile(e.target.files?.[0] || null)}
-          className="border border-orange-400 rounded-2xl p-2"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full border-2 border-orange-100 rounded-2xl p-3 outline-none"
         />
       </div>
-      <div className="flex flex-col gap-2 w-80">
-        <label>ヘッダー画像</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setHeaderFile(e.target.files?.[0] || null)}
-          className="border border-orange-400 rounded-2xl p-2"
-        />
-      </div>
-      <Link href={"/"}>
-        <button
-          onClick={handleSubmit}
-          className="border border-orange-400 rounded-2xl p-2 w-80"
-        >
-          更新する
-        </button>
-      </Link>
+
+      <button
+        onClick={handleSubmit}
+        className="w-full bg-orange-500 text-white font-bold rounded-2xl p-4 hover:bg-orange-600"
+      >
+        プロフィールを発行
+      </button>
     </div>
   );
 }

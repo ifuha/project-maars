@@ -18,14 +18,17 @@ export default function SideBar() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const id = getUserId();
-    setUserId(id);
-    if (id) getUser(id).then(setUser);
-  }, []);
+    const currentId = getUserId();
+    setUserId(currentId);
 
-  useEffect(() => {
-    setUserId(getUserId());
-  }, []);
+    if (currentId) {
+      getUser(currentId)
+        .then(setUser)
+        .catch(() => setUser(null));
+    } else {
+      setUser(null);
+    }
+  }, [pathname]);
 
   const handleLogout = () => {
     removeToken();
@@ -114,7 +117,10 @@ export default function SideBar() {
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <div>{user.name}</div>
+                <div>
+                  <div>{user.name}</div>
+                  プロフィールの編集
+                </div>
               </div>
             )}
           </Link>

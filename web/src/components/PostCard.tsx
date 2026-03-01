@@ -1,16 +1,60 @@
 "use client";
 
-import { Post } from "@/lib/api/type";
+import { Post, Tree } from "@/lib/api/type";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { getUserId } from "@/lib/utils/access-token";
+import {
+  getTreesByPost,
+  createTree,
+  deleteTree,
+  getTree,
+} from "@/lib/api/tree";
+import { cn } from "@/lib/utils/cn";
 
 type Props = {
   post: Post;
 };
 
 export default function PostCard({ post }: Props) {
+  const [treeCount, setTreeCount] = useState(0);
+  const [myTree, setMyTree] = useState<Tree | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const currentUserId = getUserId();
+    setUserId(currentUserId);
+
+    getTreesByPost(post.postId).then((res) => setTreeCount(res.count));
+
+    if (currentUserId) {
+      getTree(currentUserId, post.postId).then(setMyTree);
+    }
+  }, [post.postId]);
+
+  const handleTree = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!userId) return;
+
+    try {
+      if (myTree) {
+        const treeId = (myTree as any).treeId || (myTree as any).TreeId;
+        await deleteTree(treeId);
+        setMyTree(null);
+        setTreeCount((prev) => Math.max(0, prev - 1));
+      } else {
+        const newTree = await createTree({ postId: post.postId, userId });
+        setMyTree(newTree);
+        setTreeCount((prev) => prev + 1);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
@@ -68,6 +112,17 @@ export default function PostCard({ post }: Props) {
           </div>
         </div>
       </Link>
+      <button onClick={handleTree}>
+        <div className="flex items-center justify-center gap-2">
+          <Image
+            src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
+            alt="tree"
+            width={20}
+            height={20}
+          />
+          {treeCount}
+        </div>
+      </button>
       {isOpen && post.thumbnail && (
         <div
           className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50"
