@@ -128,15 +128,38 @@ function CreatePostPage() {
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
             </div>
-            <label>
-              公開/非公開
+            <div className="flex items-center gap-4">
+              <div className="font-bold">{isPrivate ? "非公開" : "公開"}</div>
+              <div
+                onClick={() => setIsPrivate(!isPrivate)}
+                className={`relative w-12 h-6 rounded-full cursor-pointer transition-colors ${
+                  isPrivate ? "bg-gray-400" : "bg-orange-400"
+                }`}
+              >
+                <div
+                  className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${
+                    isPrivate ? "translate-x-1" : "translate-x-7"
+                  }`}
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
               <input
-                type="checkbox"
-                onChange={(e) => setIsPrivate(e.target.checked)}
+                type="text"
+                placeholder="タグを検索"
+                value={tagSearch}
+                onChange={(e) => setTagSearch(e.target.value)}
                 className="border border-orange-400 rounded-2xl p-2"
               />
-            </label>
-            <div className="flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={handleAddTag}
+                className="bg-orange-400 text-white font-bold rounded-3xl px-6 py-2 hover:bg-white hover:text-orange-400 hover:shadow-xs shadow-orange-400"
+              >
+                タグを作成
+              </button>
+            </div>
+            <div className="flex items-center gap-4">
               {tagSearch &&
                 filteredTags.map((tag) => (
                   <button
@@ -154,20 +177,6 @@ function CreatePostPage() {
                     {tag.name}
                   </button>
                 ))}
-              <input
-                type="text"
-                placeholder="タグを検索"
-                value={tagSearch}
-                onChange={(e) => setTagSearch(e.target.value)}
-                className="border border-orange-400 rounded-2xl p-2"
-              />
-              <button
-                type="button"
-                onClick={handleAddTag}
-                className="bg-orange-400 text-white font-bold rounded-3xl px-6 py-2 hover:bg-white hover:text-orange-400 hover:shadow-xs shadow-orange-400"
-              >
-                追加
-              </button>
             </div>
             <button
               onClick={handleSubmit}

@@ -7,5 +7,16 @@ export const getTreesByPost = (postId: number) =>
 export const createTree = (tree: Partial<Tree>) =>
   api<Tree>("/api/tree", "POST", tree);
 
-export const deleteTree = (id: number) =>
-  api<void>(`/api/tree/${id}`, "DELETE");
+export const deleteTree = (userId: number, postId: number) =>
+  api<void>(`/api/tree/user/${userId}/post/${postId}`, "DELETE");
+
+export const getTree = async (
+  userId: number,
+  postId: number,
+): Promise<Tree | null> => {
+  try {
+    return await api<Tree>(`/api/tree/user/${userId}/post/${postId}`);
+  } catch {
+    return null;
+  }
+};

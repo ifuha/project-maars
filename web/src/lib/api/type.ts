@@ -26,6 +26,7 @@ export type Comment = {
   content: string;
   postId: number;
   userId: number;
+  user?: User;
 };
 
 export type Tree = {

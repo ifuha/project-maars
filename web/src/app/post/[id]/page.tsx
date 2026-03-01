@@ -3,16 +3,17 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { getPost } from "@/lib/api/post";
-import SideBar from "@/components/sidebar";
+import { getCommentsByPost, createComment } from "@/lib/api/comment";
 import {
-  getCommentsByPost,
-  createComment,
-  deleteComment,
-} from "@/lib/api/comment";
-import { getTreesByPost, createTree, deleteTree } from "@/lib/api/tree";
+  getTreesByPost,
+  createTree,
+  deleteTree,
+  getTree,
+} from "@/lib/api/tree";
 import { Post, Comment } from "@/lib/api/type";
 import { getUserId } from "@/lib/utils/access-token";
 import Image from "next/image";
+import { Tree } from "@/lib/api/type";
 
 export default function PostPage() {
   const { id } = useParams();
@@ -21,13 +22,21 @@ export default function PostPage() {
   const [treeCount, setTreeCount] = useState(0);
   const [commentContent, setCommentContent] = useState("");
   const [error, setError] = useState("");
-  const userId = getUserId();
+  const [userId, setUserId] = useState<number | null>(null);
+  const [myTree, setMyTree] = useState<Tree | null>(null);
 
   useEffect(() => {
     const postId = Number(id);
     getPost(postId).then(setPost);
     getCommentsByPost(postId).then(setComments);
     getTreesByPost(postId).then((res) => setTreeCount(res.count));
+  }, [id]);
+
+  useEffect(() => {
+    const currentUserId = getUserId();
+    if (currentUserId) {
+      getTree(currentUserId, Number(id)).then(setMyTree);
+    }
   }, [id]);
 
   const handleComment = async () => {
@@ -48,22 +57,29 @@ export default function PostPage() {
   const handleTree = async () => {
     if (!userId) return;
     try {
-      await createTree({ postId: Number(id), userId });
-      setTreeCount(treeCount + 1);
+      if (myTree) {
+        await deleteTree(userId, Number(id));
+        setMyTree(null);
+        setTreeCount((prev) => Math.max(0, prev - 1));
+      } else {
+        const newTree = await createTree({ postId: Number(id), userId });
+        setMyTree(newTree);
+        setTreeCount((prev) => prev + 1);
+      }
     } catch (e) {
-      setError("いいねに失敗しました");
+      console.error("Error in handleTree:", e);
     }
   };
 
-  if (!post) return <div>読み込み中...</div>;
+  if (!post)
+    return (
+      <div className="flex items-center justify-center">読み込み中...</div>
+    );
 
   return (
     <div>
-      <div className="fixed">
-        <SideBar />
-      </div>
-      <div className="flex flex-col items-center gap-8 p-8">
-        <div className="flex items-center gap-2">
+      <div className="ml-48 flex flex-col items-start p-8 gap-3">
+        <div className="flex items-start gap-2">
           <div className="rounded-full overflow-hidden w-10 h-10 relative">
             <Image
               src={post.user.icon || "/rocket.svg"}
@@ -72,7 +88,7 @@ export default function PostPage() {
               className="object-cover"
             />
           </div>
-          <span>{post.user.name}</span>
+          <div>{post.user.name}</div>
         </div>
 
         <h1 className="text-2xl font-bold">{post.title}</h1>
@@ -104,14 +120,8 @@ export default function PostPage() {
         >
           {treeCount}
         </button>
-
+        <div className="text-xl font-bold">コメント</div>
         <div className="w-full max-w-2xl flex flex-col gap-4">
-          <h2 className="text-xl font-bold">コメント</h2>
-          {comments.map((comment) => (
-            <div key={comment.commentId} className="border rounded-2xl p-4">
-              <p>{comment.content}</p>
-            </div>
-          ))}
           {userId && (
             <div className="flex gap-2">
               <input
@@ -119,16 +129,35 @@ export default function PostPage() {
                 placeholder="コメントを入力"
                 value={commentContent}
                 onChange={(e) => setCommentContent(e.target.value)}
-                className="border border-orange-400 rounded-2xl p-2 flex-1"
+                className="border-b border-orange-400 p-2 flex-1 outline-none"
               />
               <button
                 onClick={handleComment}
-                className="border border-orange-400 rounded-2xl px-4"
+                className="bg-orange-400 text-white px-4 rounded-2xl hover:bg-white hover:text-orange-400 hover:shadow shadow-orange-400"
               >
                 送信
               </button>
             </div>
           )}
+          {comments.map((comment) => (
+            <div
+              key={comment.commentId}
+              className="border-b border-orange-400 py-2"
+            >
+              <div className="flex items-center gap-4 py-4">
+                <div className="rounded-full overflow-hidden w-10 h-10 relative">
+                  <Image
+                    src={comment.user?.icon || "/rocket.svg"}
+                    alt="UserIcon"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>{comment.user?.name}</div>
+              </div>
+              <div>{comment.content}</div>
+            </div>
+          ))}
           {error && <p className="text-red-400">{error}</p>}
         </div>
       </div>
