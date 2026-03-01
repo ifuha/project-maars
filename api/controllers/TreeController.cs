@@ -26,7 +26,7 @@ public class TreeController : ControllerBase
         var tree = await _context.Trees
             .FirstOrDefaultAsync(t => t.UserId == userId && t.PostId == postId);
         if (tree == null) return NotFound();
-        return Ok(tree);
+        return tree;
     }
 
     [Authorize]
