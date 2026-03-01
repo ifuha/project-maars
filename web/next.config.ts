@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`,
+        destination: `https://project-mars-production.up.railway.app/api/:path*`,
       },
     ];
   },
