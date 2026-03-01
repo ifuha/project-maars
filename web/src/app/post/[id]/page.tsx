@@ -27,9 +27,16 @@ export default function PostPage() {
 
   useEffect(() => {
     const postId = Number(id);
+    const currentUserId = getUserId();
+
     getPost(postId).then(setPost);
     getCommentsByPost(postId).then(setComments);
     getTreesByPost(postId).then((res) => setTreeCount(res.count));
+
+    if (currentUserId) {
+      setUserId(currentUserId);
+      getTree(currentUserId, postId).then(setMyTree);
+    }
   }, [id]);
 
   useEffect(() => {
@@ -66,8 +73,8 @@ export default function PostPage() {
     if (!userId) return;
     try {
       if (myTree) {
-        const targetId = myTree.treeId || (myTree as any).TreeId;
-        await deleteTree(targetId);
+        const treeId = (myTree as any).treeId || (myTree as any).TreeId;
+        await deleteTree(treeId);
         setMyTree(null);
         setTreeCount((prev) => Math.max(0, prev - 1));
       } else {
@@ -76,7 +83,7 @@ export default function PostPage() {
         setTreeCount((prev) => prev + 1);
       }
     } catch (e) {
-      console.error("HandleTree Error:", e);
+      console.error(e);
     }
   };
 

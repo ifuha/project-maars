@@ -21,8 +21,7 @@ export async function api<T>(
   });
 
   if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(errorText || `Error ${res.status}`);
+    throw new Error(`Status: ${res.status} Path: ${endpoint}`);
   }
 
   if (res.status === 204) return {} as T;
