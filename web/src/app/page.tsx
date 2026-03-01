@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     getPosts()
-      .then(setPosts)
+      .then((data) => setPosts(data.reverse()))
       .finally(() => setLoading(false));
   }, []);
 
