@@ -37,9 +37,16 @@ public class TagController : ControllerBase
         if (await _context.Tags.AnyAsync(t => t.Name == tag.Name))
             return BadRequest("既に存在するタグです");
 
-        _context.Tags.Add(tag);
+        var newTag = new Tag
+            {
+                Name = tag.Name
+            };
+
+        _context.Tags.Add(newTag);
+
+        _context.Tags.Add(newTag);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetTag), new { id = tag.TagId }, tag);
+        return CreatedAtAction(nameof(GetTag), new { id = newTag.TagId }, newTag);
     }
     [Authorize]
     [HttpDelete("{id}")]

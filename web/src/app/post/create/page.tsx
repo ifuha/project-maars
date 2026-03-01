@@ -1,7 +1,7 @@
 "use client";
 
-import SideBar from "@/components/sidebar";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { createPost } from "@/lib/api/post";
 import { createTag, getTags } from "@/lib/api/tag";
 import { createPostTag } from "@/lib/api/postTag";
@@ -14,31 +14,46 @@ function CreatePostPage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isPrivate, setIsPrivate] = useState(false);
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const [newTagName, setNewTagName] = useState("");
   const [error, setError] = useState("");
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [tagSearch, setTagSearch] = useState("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setThumbnailFile(file);
+    if (file) {
+      setPreviewUrl(URL.createObjectURL(file));
+    } else {
+      setPreviewUrl(null);
+    }
+  };
+  const filteredTags = tags.filter((tag) =>
+    tag.name.toLowerCase().includes(tagSearch.toLowerCase()),
+  );
 
   useEffect(() => {
     getTags().then(setTags);
   }, []);
 
   const handleAddTag = async () => {
-    if (!newTagName) return;
+    if (!tagSearch) return;
     try {
-      const tag = await createTag({ name: newTagName });
+      const tag = await createTag({ name: tagSearch });
       setTags([...tags, tag]);
       setSelectedTagIds([...selectedTagIds, tag.tagId]);
-      setNewTagName("");
+      setTagSearch("");
     } catch (e) {
       setError("タグの作成に失敗しました");
     }
   };
 
   const toggleTag = (tagId: number) => {
+    console.log("toggleTag:", tagId);
     setSelectedTagIds((prev) =>
       prev.includes(tagId)
         ? prev.filter((id) => id !== tagId)
@@ -47,7 +62,6 @@ function CreatePostPage() {
   };
 
   const handleSubmit = async () => {
-    console.log("handleSubmit called");
     const userId = getUserId();
     try {
       if (!userId) {
@@ -66,9 +80,10 @@ function CreatePostPage() {
         userId,
       });
       await Promise.all(
-        selectedTagIds.map((tagId) =>
-          createPostTag({ postId: post.postId, tagId }),
-        ),
+        selectedTagIds.map(async (tagId) => {
+          console.log("createPostTag:", { postId: post.postId, tagId });
+          return createPostTag({ postId: post.postId, tagId });
+        }),
       );
       router.push("/");
     } catch (e) {
@@ -92,12 +107,27 @@ function CreatePostPage() {
             />
           </div>
           <div className="flex flex-col items-center justify-end gap-12">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
-              className="border border-orange-400 rounded-2xl w-100 h-50 p-4"
-            />
+            <div className="relative w-100 h-50">
+              {previewUrl ? (
+                <Image
+                  src={previewUrl}
+                  alt="preview"
+                  width={400}
+                  height={200}
+                  className="object-cover rounded-2xl w-full h-full"
+                />
+              ) : (
+                <div className="border border-orange-400 rounded-2xl w-full h-full flex items-center justify-center">
+                  画像を選択
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+            </div>
             <label>
               公開/非公開
               <input
@@ -107,21 +137,34 @@ function CreatePostPage() {
               />
             </label>
             <div className="flex items-center justify-center gap-2">
-              {tags.map((tag) => (
-                <button key={tag.tagId} onClick={() => toggleTag(tag.tagId)}>
-                  {tag.name}
-                </button>
-              ))}
+              {tagSearch &&
+                filteredTags.map((tag) => (
+                  <button
+                    key={tag.tagId}
+                    onClick={() => {
+                      toggleTag(tag.tagId);
+                      setTagSearch("");
+                    }}
+                    className={`px-3 py-1 rounded-full border text-sm ${
+                      selectedTagIds.includes(tag.tagId)
+                        ? "bg-orange-400 text-white"
+                        : "border-orange-400"
+                    }`}
+                  >
+                    {tag.name}
+                  </button>
+                ))}
               <input
                 type="text"
-                placeholder="新規タグ名"
-                value={newTagName}
-                onChange={(e) => setNewTagName(e.target.value)}
+                placeholder="タグを検索"
+                value={tagSearch}
+                onChange={(e) => setTagSearch(e.target.value)}
                 className="border border-orange-400 rounded-2xl p-2"
               />
               <button
+                type="button"
                 onClick={handleAddTag}
-                className="border border-orange-400 rounded-2xl p-2"
+                className="bg-orange-400 text-white font-bold rounded-3xl px-6 py-2 hover:bg-white hover:text-orange-400 hover:shadow-xs shadow-orange-400"
               >
                 追加
               </button>
