@@ -20,7 +20,12 @@ export async function api<T>(
     ...(body ? { body: JSON.stringify(body) } : {}),
   });
 
-  if (!res.ok) throw new Error(await res.text());
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(errorText || `Error ${res.status}`);
+  }
+
+  if (res.status === 204) return {} as T;
 
   return res.json();
 }
