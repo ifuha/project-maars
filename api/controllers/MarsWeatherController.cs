@@ -6,7 +6,7 @@ using Api.Models;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("/api/[controller]")]
+[Route("/api/marsweather")]
 public class MarsWeatherService : BackgroundService
 {
     private readonly IServiceProvider _serviceProvider;
