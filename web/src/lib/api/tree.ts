@@ -16,7 +16,7 @@ export const getTree = async (
 ): Promise<Tree | null> => {
   try {
     return await api<Tree>(`/api/tree/user/${userId}/post/${postId}`);
-  } catch (e) {
+  } catch {
     return null;
   }
 };
