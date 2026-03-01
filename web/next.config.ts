@@ -17,7 +17,8 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `https://project-mars-production.up.railway.app/api/:path*`,
+        destination:
+          "https://project-mars-production.up.railway.app/api/:path*",
       },
     ];
   },
