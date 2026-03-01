@@ -185,3 +185,5 @@
 /Users/itou/Documents/project-mars/api/obj/Debug/net9.0/ref/api.dll
 /Users/itou/Documents/project-mars/api/bin/Debug/net9.0/AWSSDK.Core.dll
 /Users/itou/Documents/project-mars/api/bin/Debug/net9.0/AWSSDK.S3.dll
+/Users/itou/Documents/project-mars/api/bin/Debug/net9.0/Npgsql.dll
+/Users/itou/Documents/project-mars/api/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll

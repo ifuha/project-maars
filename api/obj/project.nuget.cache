@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MSSN1JEfStk=",
+  "dgSpecHash": "cP/jg8oFXmA=",
   "success": true,
   "projectFilePath": "/Users/itou/Documents/project-mars/api/api.csproj",
   "expectedPackageFiles": [
@@ -55,6 +55,8 @@
     "/Users/itou/.nuget/packages/microsoft.sqlserver.server/1.0.0/microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "/Users/itou/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "/Users/itou/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
+    "/Users/itou/.nuget/packages/npgsql/9.0.0/npgsql.9.0.0.nupkg.sha512",
+    "/Users/itou/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.0/npgsql.entityframeworkcore.postgresql.9.0.0.nupkg.sha512",
     "/Users/itou/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.10/sqlitepclraw.bundle_e_sqlite3.2.1.10.nupkg.sha512",
     "/Users/itou/.nuget/packages/sqlitepclraw.core/2.1.10/sqlitepclraw.core.2.1.10.nupkg.sha512",
     "/Users/itou/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.10/sqlitepclraw.lib.e_sqlite3.2.1.10.nupkg.sha512",
