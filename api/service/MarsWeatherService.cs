@@ -7,78 +7,34 @@ namespace Api.Services;
 
 public class MarsWeatherService : BackgroundService
 {
-    private readonly IServiceScopeFactory _scopeFactory;
-    private readonly IConfiguration _config;
-    private readonly HttpClient _httpClient;
+    private readonly IServiceProvider _serviceProvider;
 
-    public MarsWeatherService(IServiceScopeFactory scopeFactory, IConfiguration config, IHttpClientFactory httpClientFactory)
+    public MarsWeatherService(IServiceProvider serviceProvider)
     {
-        _scopeFactory = scopeFactory;
-        _config = config;
-        _httpClient = httpClientFactory.CreateClient();
+        _serviceProvider = serviceProvider;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // 起動時に1回取得
-        await FetchAndSave();
+        using var scope = _serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        // 24時間ごとに更新
-        using var timer = new PeriodicTimer(TimeSpan.FromHours(24));
-        while (await timer.WaitForNextTickAsync(stoppingToken))
+        if (!context.MarsWeathers.Any())
         {
-            await FetchAndSave();
-        }
-    }
-
-    private async Task FetchAndSave()
-    {
-        try
-        {
-            using var scope = _scopeFactory.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-            var apiKey = _config["Nasa:ApiKey"];
-            var url = $"https://api.nasa.gov/insight_weather/?api_key={apiKey}&feedtype=json&ver=1.0";
-
-            var response = await _httpClient.GetAsync(url);
-            if (!response.IsSuccessStatusCode) return;
-
-            var json = await response.Content.ReadAsStringAsync();
-            var doc = JsonDocument.Parse(json);
-
-            var solKeys = doc.RootElement.GetProperty("sol_keys").EnumerateArray()
-                .Select(s => s.GetString()!)
-                .ToList();
-
-            foreach (var sol in solKeys)
+            var random = new Random();
+            var weathers = Enumerable.Range(1, 7).Select(i => new MarsWeather
             {
-                if (await context.MarsWeathers.AnyAsync(m => m.Sol == sol)) continue;
+                Sol = $"{1000 + i}",
+                TempMax = Math.Round(-20 + random.NextDouble() * 30, 1),
+                TempMin = Math.Round(-80 + random.NextDouble() * 30, 1),
+                TempAvg = Math.Round(-50 + random.NextDouble() * 20, 1),
+                Pressure = Math.Round(700 + random.NextDouble() * 100, 1),
+                WindSpeed = Math.Round(random.NextDouble() * 20, 1),
+                FetchedAt = DateTime.UtcNow
+            }).ToList();
 
-                var solData = doc.RootElement.GetProperty(sol);
-                var weather = new MarsWeather { Sol = sol, FetchedAt = DateTime.UtcNow };
-
-                if (solData.TryGetProperty("AT", out var at))
-                {
-                    weather.TempMax = at.TryGetProperty("mx", out var mx) ? mx.GetDouble() : 0;
-                    weather.TempMin = at.TryGetProperty("mn", out var mn) ? mn.GetDouble() : 0;
-                    weather.TempAvg = at.TryGetProperty("av", out var av) ? av.GetDouble() : 0;
-                }
-
-                if (solData.TryGetProperty("PRE", out var pre))
-                    weather.Pressure = pre.TryGetProperty("av", out var pav) ? pav.GetDouble() : 0;
-
-                if (solData.TryGetProperty("HWS", out var hws))
-                    weather.WindSpeed = hws.TryGetProperty("av", out var wav) ? wav.GetDouble() : 0;
-
-                context.MarsWeathers.Add(weather);
-            }
-
+            context.MarsWeathers.AddRange(weathers);
             await context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"MarsWeather取得エラー: {ex.Message}");
         }
     }
 }
