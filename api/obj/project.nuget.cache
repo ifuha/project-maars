@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KXyRWztu2q4=",
+  "dgSpecHash": "cP/jg8oFXmA=",
   "success": true,
-  "projectFilePath": "/Users/itou/Documents/project-maars/api/api.csproj",
+  "projectFilePath": "/Users/itou/Documents/project-mars/api/api.csproj",
   "expectedPackageFiles": [
     "/Users/itou/.nuget/packages/awssdk.core/3.7.100/awssdk.core.3.7.100.nupkg.sha512",
     "/Users/itou/.nuget/packages/awssdk.s3/3.7.100/awssdk.s3.3.7.100.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/itou/Documents/project-maars/api/api.csproj": {}
+    "/Users/itou/Documents/project-mars/api/api.csproj": {}
   },
   "projects": {
-    "/Users/itou/Documents/project-maars/api/api.csproj": {
+    "/Users/itou/Documents/project-mars/api/api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/itou/Documents/project-maars/api/api.csproj",
+        "projectUniqueName": "/Users/itou/Documents/project-mars/api/api.csproj",
         "projectName": "api",
-        "projectPath": "/Users/itou/Documents/project-maars/api/api.csproj",
+        "projectPath": "/Users/itou/Documents/project-mars/api/api.csproj",
         "packagesPath": "/Users/itou/.nuget/packages/",
-        "outputPath": "/Users/itou/Documents/project-maars/api/obj/",
+        "outputPath": "/Users/itou/Documents/project-mars/api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/itou/.nuget/NuGet/NuGet.Config"
