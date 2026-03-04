@@ -37,38 +37,38 @@ export default function SideBar() {
   if (pathname === "/login" || pathname === "/register") return null;
 
   return (
-    <div>
-      <div className="hidden md:flex flex-col items-start gap-12 m-4 h-screen fixed left-0 top-0">
-        <Link href="/">
-          <div className="flex items-center gap-2">
-            <Image src="/rocket.svg" alt="logo" width={40} height={40} />
-            <div className={cn(pathname === "/" && "text-orange-400")}>
+    <div className="flex flex-col items-end gap-6 h-screen">
+      <div className="flex flex-col items-start gap-12 m-4">
+        <Link href={"/"}>
+          <div className="flex items-center justify-between gap-2">
+            <Image src={"/rocket.svg"} alt="logo" width={40} height={40} />
+            <div className={cn(pathname == "/" && "text-orange-400")}>
               Rocket
             </div>
           </div>
         </Link>
-        <Link href="/topic">
-          <div className="flex items-center gap-2">
-            <Image src="/sparkle.svg" alt="topic" width={40} height={40} />
-            <div className={cn(pathname === "/topic" && "text-orange-400")}>
+        <Link href={"/topic"}>
+          <div className="flex items-center justify-between gap-2">
+            <Image src={"/sparkle.svg"} alt="search" width={40} height={40} />
+            <div className={cn(pathname == "/topic" && "text-orange-400")}>
               トピック
             </div>
           </div>
         </Link>
-        <Link href="/explore">
-          <div className="flex items-center gap-2">
-            <Image src="/search.svg" alt="search" width={40} height={40} />
-            <div className={cn(pathname === "/explore" && "text-orange-400")}>
+        <Link href={"/explore"}>
+          <div className="flex items-center justify-between gap-2">
+            <Image src={"/search.svg"} alt="search" width={40} height={40} />
+            <div className={cn(pathname == "/explore" && "text-orange-400")}>
               検索
             </div>
           </div>
         </Link>
         {userId && (
-          <Link href="/post/create">
-            <div className="flex items-center gap-2">
-              <Image src="/post.svg" alt="post" width={40} height={40} />
+          <Link href={"/post/create"}>
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/post.svg"} alt="post" width={40} height={40} />
               <div
-                className={cn(pathname === "/post/create" && "text-orange-400")}
+                className={cn(pathname == "/post/create" && "text-orange-400")}
               >
                 投稿
               </div>
@@ -77,11 +77,11 @@ export default function SideBar() {
         )}
         {userId && (
           <Link href={`/user/${userId}`}>
-            <div className="flex items-center gap-2">
-              <Image src="/user.svg" alt="profile" width={40} height={40} />
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/user.svg"} alt="profile" width={40} height={40} />
               <div
                 className={cn(
-                  pathname === `/user/${userId}` && "text-orange-400",
+                  pathname == `/user/${userId}` && "text-orange-400",
                 )}
               >
                 プロフィール
@@ -91,23 +91,23 @@ export default function SideBar() {
         )}
         {userId ? (
           <button onClick={handleLogout}>
-            <div className="flex items-center gap-2">
-              <Image src="/log-out.svg" alt="logout" width={40} height={40} />
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/log-out.svg"} alt="logOut" width={40} height={40} />
               ログアウト
             </div>
           </button>
         ) : (
           <Link href="/login">
-            <div className="flex items-center gap-2">
-              <Image src="/log-in.svg" alt="login" width={40} height={40} />
+            <div className="flex items-center justify-between gap-2">
+              <Image src={"/log-in.svg"} alt="logIn" width={40} height={40} />
               ログイン
             </div>
           </Link>
         )}
         <div className="border-t border-orange-400 w-full">
-          <Link href="/user/edit">
+          <Link href={"/user/edit"}>
             {user && (
-              <div className="flex items-center gap-2 py-4">
+              <div className="flex items-center justify-start gap-2 py-4">
                 <div className="rounded-full overflow-hidden w-10 h-10">
                   <Image
                     src={user.icon || "/rocket.svg"}
@@ -125,38 +125,6 @@ export default function SideBar() {
             )}
           </Link>
         </div>
-      </div>
-
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-orange-400 flex justify-around items-center h-16 z-50">
-        <Link href="/">
-          <Image src="/rocket.svg" alt="home" width={32} height={32} />
-        </Link>
-        <Link href="/topic">
-          <Image src="/sparkle.svg" alt="topic" width={32} height={32} />
-        </Link>
-        <Link href="/explore">
-          <Image src="/search.svg" alt="search" width={32} height={32} />
-        </Link>
-        {userId && (
-          <Link href="/post/create">
-            <Image src="/post.svg" alt="post" width={32} height={32} />
-          </Link>
-        )}
-        <Link href={`/user/${userId}`}>
-          {user && (
-            <div className="flex items-center gap-2 py-4">
-              <div className="rounded-full overflow-hidden w-10 h-10">
-                <Image
-                  src={user.icon || "/rocket.svg"}
-                  alt="Icon"
-                  width={32}
-                  height={32}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </div>
-          )}
-        </Link>
       </div>
     </div>
   );
