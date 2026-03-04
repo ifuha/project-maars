@@ -140,6 +140,23 @@ export default function SideBar() {
       </div>
     );
   } else {
-    <div></div>;
+    return (
+      <div className="w-full bottom-0 fixed">
+        <div className="flex items-center justify-evenly gap-4 bg-white h-16">
+          <Link href={"/"}>
+            <Image src={"/rocket.svg"} alt="logo" width={40} height={40} />
+          </Link>
+          <Link href={"/topic"}>
+            <Image src={"/sparkle.svg"} alt="search" width={40} height={40} />
+          </Link>
+          <Link href={"/explore"}>
+            <Image src={"/search.svg"} alt="search" width={40} height={40} />
+          </Link>
+          <Link href={"/post/create"}>
+            <Image src={"/post.svg"} alt="post" width={40} height={40} />
+          </Link>
+        </div>
+      </div>
+    );
   }
 }
