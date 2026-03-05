@@ -17,8 +17,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex ml-64 min-h-screen">
-      <div className="flex-1 flex flex-col p-8 gap-12">
+    <div className="flex md:ml-64 min-h-screen mb-16 md:mb-0">
+      <div className="flex-1 flex flex-col p-4 md:p-8 gap-12">
         <div className="text-xl font-black border-b border-orange-400 py-4">
           タイムライン
         </div>
@@ -27,7 +27,7 @@ export default function Home() {
             ? Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-full h-32 bg-gray-100 animate-pulse rounded-2xl py-2 scale-3d"
+                  className="w-full h-32 bg-gray-100 animate-pulse rounded-2xl py-2"
                 />
               ))
             : posts.map((post) => (
@@ -38,7 +38,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-80 relative">
+      <div className="hidden md:block w-80 relative">
         <div className="fixed top-8 right-8 w-72">
           <MarsWeather />
         </div>
