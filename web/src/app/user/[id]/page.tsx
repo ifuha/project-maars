@@ -5,16 +5,13 @@ import { useParams } from "next/navigation";
 import { getUser } from "@/lib/api/user";
 import { getPostsByUser } from "@/lib/api/post";
 import { User, Post } from "@/lib/api/type";
-import { getUserId } from "@/lib/utils/access-token";
 import PostCard from "@/components/PostCard";
 import Image from "next/image";
-import SideBar from "@/components/sidebar";
 
 export default function UserPage() {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-  const currentUserId = getUserId();
 
   useEffect(() => {
     const userId = Number(id);
@@ -56,6 +53,7 @@ export default function UserPage() {
               />
             </div>
             <div className="text-2xl font-bold">{user.name}</div>
+            <div className="text-sm text-gray-500">{user.bio}</div>
           </div>
           <div className="py-8" />
           <div className="flex flex-col items-center justify-center gap-4">
