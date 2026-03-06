@@ -16,6 +16,7 @@ export default function EditUserPage() {
   const [headerFile, setHeaderFile] = useState<File | null>(null);
   const [iconPreview, setIconPreview] = useState<string | null>(null);
   const [headerPreview, setHeaderPreview] = useState<string | null>(null);
+  const [bio, setBio] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function EditUserPage() {
     getUser(userId).then((u) => {
       setUser(u);
       setName(u.name);
+      setBio(u.bio || "");
       setIconPreview(u.icon || null);
       setHeaderPreview(u.header || null);
     });
@@ -64,8 +66,8 @@ export default function EditUserPage() {
         name,
         icon: iconUrl,
         header: headerUrl,
+        bio,
       });
-
       router.push(`/user/${userId}`);
     } catch (e) {
       setError("更新に失敗しました");
@@ -122,6 +124,15 @@ export default function EditUserPage() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="w-full border-2 border-orange-100 rounded-2xl p-3 outline-none"
+        />
+      </div>
+      <div>
+        <label className="text-sm font-bold text-gray-600">自己紹介</label>
+        <input
+          type="text"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
           className="w-full border-2 border-orange-100 rounded-2xl p-3 outline-none"
         />
       </div>
