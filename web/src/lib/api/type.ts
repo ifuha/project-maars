@@ -4,6 +4,7 @@ export type User = {
   email: string;
   icon: string;
   header: string;
+  bio?: string;
   posts: Post[];
   trees: Tree[];
   comments: Comment[];
