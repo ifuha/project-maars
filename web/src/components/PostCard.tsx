@@ -64,8 +64,8 @@ export default function PostCard({ post }: Props) {
   }, [isOpen]);
   return (
     <div className="border-b border-orange-400">
-      <Link href={`/post/${post.postId}`}>
-        <div className="flex flex-col items-start justify-start gap-4 rounded-2xl">
+      <div className="flex flex-col items-start justify-start gap-4 rounded-2xl">
+        <Link href={`/user/${post.user.userId}`}>
           <div className="flex items-center justify-center">
             <div className="me-4">
               <div className="rounded-full overflow-hidden w-10 h-10">
@@ -80,6 +80,8 @@ export default function PostCard({ post }: Props) {
             </div>
             {post.user.name}
           </div>
+        </Link>
+        <Link href={`/post/${post.postId}`}>
           <div className="py-2">
             <div className="w-100">
               <div className="flex flex-col gap-4">
@@ -110,8 +112,9 @@ export default function PostCard({ post }: Props) {
               </div>
             </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
+
       <div className="flex gap-2 h-8">
         <button onClick={handleTree}>
           <div className="flex items-center justify-center gap-1">

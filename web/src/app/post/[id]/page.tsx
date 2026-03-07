@@ -15,6 +15,7 @@ import { Post, Comment } from "@/lib/api/type";
 import { getUserId } from "@/lib/utils/access-token";
 import Image from "next/image";
 import { Tree } from "@/lib/api/type";
+import Link from "next/link";
 
 export default function PostPage() {
   const { id } = useParams();
@@ -105,17 +106,19 @@ export default function PostPage() {
   return (
     <div>
       <div className="ml-48 flex flex-col items-start p-8 gap-3">
-        <div className="flex items-start gap-2">
-          <div className="rounded-full overflow-hidden w-10 h-10 relative">
-            <Image
-              src={post.user.icon || "/rocket.svg"}
-              alt={post.user.name}
-              fill
-              className="object-cover"
-            />
+        <Link href={`/user/${post.user.userId}`}>
+          <div className="flex items-center gap-2">
+            <div className="rounded-full overflow-hidden w-10 h-10 relative">
+              <Image
+                src={post.user.icon || "/rocket.svg"}
+                alt={post.user.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>{post.user.name}</div>
           </div>
-          <div>{post.user.name}</div>
-        </div>
+        </Link>
 
         <h1 className="text-2xl font-bold">{post.title}</h1>
         <div
