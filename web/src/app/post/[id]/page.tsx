@@ -15,6 +15,7 @@ import { Post, Comment } from "@/lib/api/type";
 import { getUserId } from "@/lib/utils/access-token";
 import Image from "next/image";
 import { Tree } from "@/lib/api/type";
+import Link from "next/link";
 
 export default function PostPage() {
   const { id } = useParams();
@@ -25,6 +26,15 @@ export default function PostPage() {
   const [error, setError] = useState("");
   const [userId, setUserId] = useState<number | null>(null);
   const [myTree, setMyTree] = useState<Tree | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [isOpen]);
 
   useEffect(() => {
     const postId = Number(id);
@@ -96,28 +106,44 @@ export default function PostPage() {
   return (
     <div>
       <div className="ml-48 flex flex-col items-start p-8 gap-3">
-        <div className="flex items-start gap-2">
-          <div className="rounded-full overflow-hidden w-10 h-10 relative">
-            <Image
-              src={post.user.icon || "/rocket.svg"}
-              alt={post.user.name}
-              fill
-              className="object-cover"
-            />
+        <Link href={`/user/${post.user.userId}`}>
+          <div className="flex items-center gap-2">
+            <div className="rounded-full overflow-hidden w-10 h-10 relative">
+              <Image
+                src={post.user.icon || "/rocket.svg"}
+                alt={post.user.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>{post.user.name}</div>
           </div>
-          <div>{post.user.name}</div>
-        </div>
+        </Link>
 
         <h1 className="text-2xl font-bold">{post.title}</h1>
-        {post.thumbnail && (
-          <Image
-            src={post.thumbnail}
-            alt={post.title}
-            width={600}
-            height={400}
-            className="object-cover rounded-2xl"
-          />
-        )}
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            setIsOpen(true);
+          }}
+        >
+          {post.thumbnail && (
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                setIsOpen(true);
+              }}
+            >
+              <Image
+                src={post.thumbnail}
+                alt={post.title}
+                width={600}
+                height={400}
+                className="object-cover rounded-2xl"
+              />
+            </div>
+          )}
+        </div>
         <p className="w-full max-w-2xl wrap-break-word">{post.content}</p>
 
         <div className="flex gap-2">
@@ -130,18 +156,28 @@ export default function PostPage() {
             </span>
           ))}
         </div>
-
-        <button onClick={handleTree}>
-          <div className="flex items-center justify-center gap-2">
+        <div className="flex gap-2 h-8">
+          <button onClick={handleTree}>
+            <div className="flex items-center justify-center gap-1">
+              <Image
+                src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
+                alt="tree"
+                width={20}
+                height={20}
+              />
+              {treeCount}
+            </div>
+          </button>
+          <div className="flex items-center justify-center gap-1">
             <Image
-              src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
-              alt="tree"
+              src={"/message-circle.svg"}
+              alt="comments"
               width={20}
               height={20}
             />
-            {treeCount}
+            {comments.length}
           </div>
-        </button>
+        </div>
         <div className="text-xl font-bold">コメント</div>
         <div className="w-full max-w-2xl flex flex-col gap-4">
           {userId && (
@@ -183,6 +219,20 @@ export default function PostPage() {
           {error && <p className="text-red-400">{error}</p>}
         </div>
       </div>
+      {isOpen && post.thumbnail && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50"
+          onClick={() => setIsOpen(false)}
+        >
+          <Image
+            src={post.thumbnail}
+            alt={post.title}
+            width={800}
+            height={600}
+            className="object-contain rounded-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 }
