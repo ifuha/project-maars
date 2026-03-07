@@ -115,7 +115,7 @@ export default function PostCard({ post }: Props) {
         </Link>
       </div>
 
-      <div className="flex gap-2 h-8">
+      <div className="flex gap-4 h-8">
         <button onClick={handleTree}>
           <div className="flex items-center justify-center gap-1">
             <Image
