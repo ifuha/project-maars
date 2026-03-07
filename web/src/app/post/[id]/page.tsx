@@ -191,7 +191,7 @@ export default function PostPage() {
               />
               <button
                 onClick={handleComment}
-                className="bg-orange-400 text-white px-4 rounded-2xl hover:bg-white hover:text-orange-400 hover:shadow shadow-orange-400"
+                className="text-orange-400 border-b px-4 hover:bg-orange-400 hover:text-white hover:shadow shadow-orange-400"
               >
                 送信
               </button>
