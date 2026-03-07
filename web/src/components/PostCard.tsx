@@ -112,17 +112,28 @@ export default function PostCard({ post }: Props) {
           </div>
         </div>
       </Link>
-      <button onClick={handleTree}>
-        <div className="flex items-center justify-center gap-2">
+      <div className="flex gap-2 h-8">
+        <button onClick={handleTree}>
+          <div className="flex items-center justify-center gap-1">
+            <Image
+              src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
+              alt="tree"
+              width={20}
+              height={20}
+            />
+            {treeCount}
+          </div>
+        </button>
+        <div className="flex items-center justify-center gap-1">
           <Image
-            src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
-            alt="tree"
+            src={"/message-circle.svg"}
+            alt="comments"
             width={20}
             height={20}
           />
-          {treeCount}
+          {post.comments.length}
         </div>
-      </button>
+      </div>
       {isOpen && post.thumbnail && (
         <div
           className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50"

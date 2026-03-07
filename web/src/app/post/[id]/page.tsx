@@ -130,18 +130,28 @@ export default function PostPage() {
             </span>
           ))}
         </div>
-
-        <button onClick={handleTree}>
-          <div className="flex items-center justify-center gap-2">
+        <div className="flex gap-2 h-8">
+          <button onClick={handleTree}>
+            <div className="flex items-center justify-center gap-1">
+              <Image
+                src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
+                alt="tree"
+                width={20}
+                height={20}
+              />
+              {treeCount}
+            </div>
+          </button>
+          <div className="flex items-center justify-center gap-1">
             <Image
-              src={cn(myTree ? "/tree.svg" : "/tree-pine.svg")}
-              alt="tree"
+              src={"/message-circle.svg"}
+              alt="comments"
               width={20}
               height={20}
             />
-            {treeCount}
+            {comments.length}
           </div>
-        </button>
+        </div>
         <div className="text-xl font-bold">コメント</div>
         <div className="w-full max-w-2xl flex flex-col gap-4">
           {userId && (
