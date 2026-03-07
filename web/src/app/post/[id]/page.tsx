@@ -25,6 +25,15 @@ export default function PostPage() {
   const [error, setError] = useState("");
   const [userId, setUserId] = useState<number | null>(null);
   const [myTree, setMyTree] = useState<Tree | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [isOpen]);
 
   useEffect(() => {
     const postId = Number(id);
@@ -109,15 +118,29 @@ export default function PostPage() {
         </div>
 
         <h1 className="text-2xl font-bold">{post.title}</h1>
-        {post.thumbnail && (
-          <Image
-            src={post.thumbnail}
-            alt={post.title}
-            width={600}
-            height={400}
-            className="object-cover rounded-2xl"
-          />
-        )}
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            setIsOpen(true);
+          }}
+        >
+          {post.thumbnail && (
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                setIsOpen(true);
+              }}
+            >
+              <Image
+                src={post.thumbnail}
+                alt={post.title}
+                width={600}
+                height={400}
+                className="object-cover rounded-2xl"
+              />
+            </div>
+          )}
+        </div>
         <p className="w-full max-w-2xl wrap-break-word">{post.content}</p>
 
         <div className="flex gap-2">
@@ -193,6 +216,20 @@ export default function PostPage() {
           {error && <p className="text-red-400">{error}</p>}
         </div>
       </div>
+      {isOpen && post.thumbnail && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50"
+          onClick={() => setIsOpen(false)}
+        >
+          <Image
+            src={post.thumbnail}
+            alt={post.title}
+            width={800}
+            height={600}
+            className="object-contain rounded-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 }
