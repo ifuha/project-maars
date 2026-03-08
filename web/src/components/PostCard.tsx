@@ -12,6 +12,7 @@ import {
   getTree,
 } from "@/lib/api/tree";
 import { cn } from "@/lib/utils/cn";
+import LinkCard from "./LinkCard";
 
 type Props = {
   post: Post;
@@ -22,6 +23,10 @@ export default function PostCard({ post }: Props) {
   const [myTree, setMyTree] = useState<Tree | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const extractUrl = (text: string): string | null => {
+    const match = text.match(/https?:\/\/[^\s]+/);
+    return match?.[0] || null;
+  };
 
   useEffect(() => {
     const currentUserId = getUserId();
@@ -113,6 +118,11 @@ export default function PostCard({ post }: Props) {
             </div>
           </div>
         </Link>
+        <div className="py-4">
+          {extractUrl(post.content) && (
+            <LinkCard url={extractUrl(post.content)!} />
+          )}
+        </div>
       </div>
 
       <div className="flex gap-4 h-8">

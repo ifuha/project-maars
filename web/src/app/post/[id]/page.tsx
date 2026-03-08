@@ -16,6 +16,7 @@ import { getUserId } from "@/lib/utils/access-token";
 import Image from "next/image";
 import { Tree } from "@/lib/api/type";
 import Link from "next/link";
+import LinkCard from "@/components/LinkCard";
 
 export default function PostPage() {
   const { id } = useParams();
@@ -27,6 +28,10 @@ export default function PostPage() {
   const [userId, setUserId] = useState<number | null>(null);
   const [myTree, setMyTree] = useState<Tree | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const extractUrl = (text: string): string | null => {
+    const match = text.match(/https?:\/\/[^\s]+/);
+    return match?.[0] || null;
+  };
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -144,7 +149,14 @@ export default function PostPage() {
             </div>
           )}
         </div>
-        <p className="w-full max-w-2xl wrap-break-word">{post.content}</p>
+        <div className="w-full max-w-2xl wrap-break-word">{post.content}</div>
+        <div className="py-4">
+          {extractUrl(post.content) && (
+            <div>
+              <LinkCard url={extractUrl(post.content)!} />
+            </div>
+          )}
+        </div>
 
         <div className="flex gap-2">
           {post.postTags.map((pt) => (
