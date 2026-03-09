@@ -18,7 +18,6 @@ function CreatePostPage() {
   const [isPrivate, setIsPrivate] = useState(false);
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const [newTagName, setNewTagName] = useState("");
   const [error, setError] = useState("");
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [tagSearch, setTagSearch] = useState("");
