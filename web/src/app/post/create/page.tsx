@@ -92,8 +92,8 @@ function CreatePostPage() {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="flex justify-between items-center h-svh gap-35">
-          <div className="flex flex-col items-center justify-end gap-4">
+        <div className="md:flex justify-between items-center h-svh gap-35">
+          <div className="flex flex-col items-center justify-end gap-4 p-4">
             <input
               type="text"
               placeholder="タイトル"
@@ -105,7 +105,7 @@ function CreatePostPage() {
               className="border border-orange-400 w-100 h-100 rounded-2xl p-2"
             />
           </div>
-          <div className="flex flex-col items-center justify-end gap-12">
+          <div className="flex flex-col items-center justify-end md:gap-6 p-4 gap-3">
             <div className="relative w-100 h-50">
               {previewUrl ? (
                 <Image
@@ -177,13 +177,15 @@ function CreatePostPage() {
                   </button>
                 ))}
             </div>
-            <button
-              onClick={handleSubmit}
-              className="border border-orange-400 rounded-2xl p-2"
-            >
-              投稿する
-            </button>
-            {error && <div className="text-red-400">{error}</div>}
+            <div className="py-16">
+              <button
+                onClick={handleSubmit}
+                className="border border-orange-400 rounded-2xl p-2"
+              >
+                投稿する
+              </button>
+              {error && <div className="text-red-400">{error}</div>}
+            </div>
           </div>
         </div>
       </div>
