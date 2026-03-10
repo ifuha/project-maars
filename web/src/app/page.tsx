@@ -20,7 +20,7 @@ export default function Home() {
     <div className="flex md:ml-64 min-h-screen mb-16 md:mb-0">
       <div className="flex-1 flex flex-col p-4 md:p-8 gap-12">
         <div className="text-xl font-black border-b border-orange-400 py-4">
-          タイムライン
+          Home
         </div>
         <div className="flex flex-col gap-2">
           {loading
