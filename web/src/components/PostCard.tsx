@@ -13,6 +13,7 @@ import {
 } from "@/lib/api/tree";
 import { cn } from "@/lib/utils/cn";
 import LinkCard from "./LinkCard";
+import { deletePost } from "@/lib/api/post";
 
 type Props = {
   post: Post;
@@ -23,6 +24,7 @@ export default function PostCard({ post }: Props) {
   const [myTree, setMyTree] = useState<Tree | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const extractUrl = (text: string): string | null => {
     const match = text.match(/https?:\/\/[^\s]+/);
     return match?.[0] || null;
@@ -38,6 +40,17 @@ export default function PostCard({ post }: Props) {
       getTree(currentUserId, post.postId).then(setMyTree);
     }
   }, [post.postId]);
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!confirm("delete!")) return;
+    try {
+      await deletePost(post.postId);
+    } catch (error) {
+      return;
+    }
+  };
 
   const handleTree = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,7 +69,7 @@ export default function PostCard({ post }: Props) {
         setTreeCount((prev) => prev + 1);
       }
     } catch (err) {
-      console.error(err);
+      return;
     }
   };
 
@@ -67,25 +80,62 @@ export default function PostCard({ post }: Props) {
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [isMenuOpen]);
+
   return (
     <div className="border-b border-orange-400">
       <div className="flex flex-col items-start justify-start gap-4 rounded-2xl">
-        <Link href={`/user/${post.user.userId}`}>
-          <div className="flex items-center justify-center">
-            <div className="me-4">
-              <div className="rounded-full overflow-hidden w-10 h-10">
-                <Image
-                  src={post.user.icon || "/rocket.svg"}
-                  alt={post.user.name}
-                  width={32}
-                  height={32}
-                  className="rounded-full overflow-hidden w-full h-full border border-orange-400"
-                />
+        <div className="flex justify-between w-full">
+          <Link href={`/user/${post.user.userId}`}>
+            <div className="flex items-center justify-center">
+              <div className="me-4">
+                <div className="rounded-full overflow-hidden w-10 h-10">
+                  <Image
+                    src={post.user.icon || "/rocket.svg"}
+                    alt={post.user.name}
+                    width={32}
+                    height={32}
+                    className="rounded-full overflow-hidden w-full h-full border border-orange-400"
+                  />
+                </div>
               </div>
+              {post.user.name}
             </div>
-            {post.user.name}
+          </Link>
+          <div className="relative flex justify-end items-center">
+            {userId === post.user.userId && (
+              <Image
+                src="/ellipsis-vertical.svg"
+                alt="menu"
+                width={24}
+                height={24}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+                className="cursor-pointer"
+              />
+            )}
+            {isMenuOpen && userId === post.user.userId && (
+              <div className="absolute top-12 bg-white rounded-2xl shadow-xs shadow-orange-400 p-2 min-w-24">
+                <button
+                  onClick={handleDelete}
+                  className="text-red-500 px-4 py-2 w-full"
+                >
+                  削除
+                </button>
+              </div>
+            )}
           </div>
-        </Link>
+        </div>
         <Link href={`/post/${post.postId}`}>
           <div className="py-2">
             <div className="w-100">

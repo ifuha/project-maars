@@ -39,6 +39,8 @@ function CreatePostPage() {
     getTags().then(setTags);
   }, []);
 
+  const [loading, setLoading] = useState(false);
+
   const handleAddTag = async () => {
     if (!tagSearch) return;
     try {
@@ -62,6 +64,7 @@ function CreatePostPage() {
 
   const handleSubmit = async () => {
     const userId = getUserId();
+    setLoading(true);
     try {
       if (!userId) {
         setError("ログインが必要です");
@@ -87,6 +90,8 @@ function CreatePostPage() {
       router.push("/");
     } catch (e) {
       setError("投稿に失敗しました");
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -180,9 +185,15 @@ function CreatePostPage() {
             <div className="py-16">
               <button
                 onClick={handleSubmit}
-                className="border border-orange-400 rounded-2xl p-2"
+                disabled={loading}
+                className="rounded-full px-4 py-2 bg-orange-400 text-white"
               >
-                投稿する
+                <div className="flex items-center gap-2">
+                  {loading ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : null}
+                  {loading ? "投稿中..." : "投稿する"}
+                </div>
               </button>
               {error && <div className="text-red-400">{error}</div>}
             </div>
