@@ -109,19 +109,26 @@ export default function PostCard({ post }: Props) {
               {post.user.name}
             </div>
           </Link>
-          <div className="flex justify-end items-center">
-            <Image
-              src={"/ellipsis-vertical.svg"}
-              alt="e"
-              width={24}
-              height={24}
-              onClick={() => setIsMenuOpen(true)}
-            />
-            {isMenuOpen && (
-              <div className="w-23 h-24 bg-white rounded-2xl shadow-2xl absolute inset-0">
+          <div className="relative flex justify-end items-center">
+            {userId === post.user.userId && (
+              <Image
+                src="/ellipsis-vertical.svg"
+                alt="menu"
+                width={24}
+                height={24}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+                className="cursor-pointer"
+              />
+            )}
+            {isMenuOpen && userId === post.user.userId && (
+              <div className="absolute top-12 bg-white rounded-2xl shadow-xs shadow-orange-400 p-2 min-w-24">
                 <button
                   onClick={handleDelete}
-                  className="text-white bg-red-400 rounded-xl px-2 py-1"
+                  className="text-red-500 px-4 py-2 w-full"
                 >
                   削除
                 </button>
