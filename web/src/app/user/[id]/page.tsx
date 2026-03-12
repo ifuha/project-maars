@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getUser } from "@/lib/api/user";
 import { getPostsByUser } from "@/lib/api/post";
 import { User, Post } from "@/lib/api/type";
 import PostCard from "@/components/PostCard";
+import Link from "next/link";
 import Image from "next/image";
 
 export default function UserPage() {
+  const route = useRouter();
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -52,7 +55,19 @@ export default function UserPage() {
                 className="rounded-full object-cover w-full h-full border border-orange-400"
               />
             </div>
-            <div className="text-2xl font-bold">{user.name}</div>
+            <div className="text-2xl font-bold flex items-center gap-2">
+              {user.name}{" "}
+              <div>
+                <Link href={`/user/edit`}>
+                  <Image
+                    src={"/pen-line.svg"}
+                    alt="edit"
+                    width={16}
+                    height={16}
+                  />
+                </Link>
+              </div>
+            </div>
             <div className="text-sm text-gray-500">{user.bio}</div>
           </div>
           <div className="py-8" />
