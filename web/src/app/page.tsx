@@ -32,7 +32,12 @@ export default function Home() {
               ))
             : posts.map((post) => (
                 <div key={post.postId} className="py-2">
-                  <PostCard post={post} />
+                  <PostCard
+                    post={post}
+                    onDelete={(id) =>
+                      setPosts((prev) => prev.filter((p) => p.postId !== id))
+                    }
+                  />
                 </div>
               ))}
         </div>

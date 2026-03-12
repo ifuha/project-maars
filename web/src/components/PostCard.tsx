@@ -17,9 +17,10 @@ import { deletePost } from "@/lib/api/post";
 
 type Props = {
   post: Post;
+  onDelete?: (postId: number) => void;
 };
 
-export default function PostCard({ post }: Props) {
+export default function PostCard({ post, onDelete }: Props) {
   const [treeCount, setTreeCount] = useState(0);
   const [myTree, setMyTree] = useState<Tree | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
@@ -28,6 +29,18 @@ export default function PostCard({ post }: Props) {
   const extractUrl = (text: string): string | null => {
     const match = text.match(/https?:\/\/[^\s]+/);
     return match?.[0] || null;
+  };
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!confirm("delete!")) return;
+    try {
+      await deletePost(post.postId);
+      onDelete?.(post.postId);
+    } catch (error) {
+      return;
+    }
   };
 
   useEffect(() => {
@@ -40,17 +53,6 @@ export default function PostCard({ post }: Props) {
       getTree(currentUserId, post.postId).then(setMyTree);
     }
   }, [post.postId]);
-
-  const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!confirm("delete!")) return;
-    try {
-      await deletePost(post.postId);
-    } catch (error) {
-      return;
-    }
-  };
 
   const handleTree = async (e: React.MouseEvent) => {
     e.preventDefault();
