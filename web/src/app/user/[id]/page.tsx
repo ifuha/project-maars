@@ -56,7 +56,7 @@ export default function UserPage() {
               />
             </div>
             <div className="text-2xl font-bold flex items-center gap-2">
-              {user.name}{" "}
+              {user.name}
               <div>
                 <Link href={`/user/edit`}>
                   <Image
@@ -68,6 +68,7 @@ export default function UserPage() {
                 </Link>
               </div>
             </div>
+            {user.handle}
             <div className="text-sm text-gray-500">{user.bio}</div>
           </div>
           <div className="py-8" />

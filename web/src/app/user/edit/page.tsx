@@ -12,6 +12,7 @@ export default function EditUserPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [name, setName] = useState("");
+  const [handle, sethandle] = useState("");
   const [iconFile, setIconFile] = useState<File | null>(null);
   const [headerFile, setHeaderFile] = useState<File | null>(null);
   const [iconPreview, setIconPreview] = useState<string | null>(null);
@@ -28,6 +29,7 @@ export default function EditUserPage() {
     getUser(userId).then((u) => {
       setUser(u);
       setName(u.name);
+      sethandle(u.handle || u.name);
       setBio(u.bio || "");
       setIconPreview(u.icon || null);
       setHeaderPreview(u.header || null);
@@ -64,6 +66,7 @@ export default function EditUserPage() {
       await updateUser(userId, {
         ...user,
         name,
+        handle,
         icon: iconUrl,
         header: headerUrl,
         bio,
@@ -124,6 +127,15 @@ export default function EditUserPage() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="w-full border-2 border-orange-100 rounded-2xl p-3 outline-none"
+        />
+      </div>
+      <div>
+        <label className="text-sm font-bold text-gray-600">ハンドル</label>
+        <input
+          type="text"
+          value={handle}
+          onChange={(e) => sethandle(e.target.value)}
           className="w-full border-2 border-orange-100 rounded-2xl p-3 outline-none"
         />
       </div>

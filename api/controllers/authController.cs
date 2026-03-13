@@ -30,11 +30,12 @@ public class AuthController : ControllerBase
     {
       Name = dto.Name,
       Email = dto.Email,
-      Password = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+      Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+      Handle = dto.Handle
     };
     _context.Users.Add(user);
     await _context.SaveChangesAsync();
-    return Ok(new { user.UserId, user.Name, user.Email });
+    return Ok(new { user.UserId, user.Name, user.Email, user.Handle });
   }
 
   [HttpPost("login")]
@@ -46,7 +47,7 @@ public class AuthController : ControllerBase
         return Unauthorized("メールアドレスまたはパスワードが違います");
       var token = GenerateToken(user);
 
-      return Ok(new { token, user.UserId, user.Name, user.Email });
+      return Ok(new { token, user.UserId, user.Name, user.Email, user.Handle });
   }
   private string GenerateToken(User user)
   {
@@ -69,5 +70,5 @@ public class AuthController : ControllerBase
   }
 }
 
-public record RegisterDto(string Name, string Email, string Password);
+public record RegisterDto(string Name, string Email, string Password, string Handle);
 public record LoginDto(string Email, string Password);
