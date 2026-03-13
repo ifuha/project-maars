@@ -68,7 +68,7 @@ export default function UserPage() {
                 </Link>
               </div>
             </div>
-            {user.handle}
+            <div className="text-gray-500">{"@" + user.handle}</div>
             <div className="text-sm text-gray-500">{user.bio}</div>
           </div>
           <div className="py-8" />
