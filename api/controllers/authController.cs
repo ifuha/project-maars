@@ -31,6 +31,7 @@ public class AuthController : ControllerBase
       Name = dto.Name,
       Email = dto.Email,
       Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+      Handle = dto.Handle ?? dto.Name
     };
     _context.Users.Add(user);
     await _context.SaveChangesAsync();
