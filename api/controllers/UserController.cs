@@ -42,17 +42,16 @@ public class UserController : ControllerBase
   public async Task<IActionResult> UpdateUser(int id , User user)
   {
     if (id != user.UserId) return BadRequest();
-    
-    var existing = await _context.Users.FindAsync(id);
-    if (existing == null) return NotFound();
-    
-    existing.Name = user.Name;
-    existing.Handle = user.Handle;
-    existing.Icon = user.Icon;
-    existing.Header = user.Header;
-    existing.Bio = user.Bio;
-    
-    await _context.SaveChangesAsync();
+    _context.Entry(user).State = EntityState.Modified;
+    try
+      {
+        await _context.SaveChangesAsync();
+      }
+    catch (DbUpdateConcurrencyException)
+      {
+        if (!_context.Users.Any(u => u.UserId == id)) return NotFound();
+        throw;
+      }
     return NoContent();
   }
   [HttpDelete("{id}")]

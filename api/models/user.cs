@@ -6,7 +6,7 @@ public class User
   public string Name { get;set; } = string.Empty;
   public string Email { get;set; } = string.Empty;
   public string Password { get;set; } = string.Empty;
-  public string Handle { get;set; } = string.Empty;
+  public string? Handle { get;set; }
   public string Icon { get;set; } = string.Empty;
   public string Header { get;set; } = string.Empty;
   public string? Bio { get;set; }
