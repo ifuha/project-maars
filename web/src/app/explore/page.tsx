@@ -11,6 +11,7 @@ function ExplorePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedTagId, setSelectedTagId] = useState<number | null>(null);
+  const newPost = posts.reverse();
   const filteredTags = tags.filter((tag) =>
     tag.name.toLowerCase().includes(search.toLowerCase()),
   );
@@ -53,7 +54,7 @@ function ExplorePage() {
             ))}
         </div>
         <div className="flex flex-col gap-4">
-          {posts.map((post) => (
+          {newPost.map((post) => (
             <div key={post.postId} className="py-2">
               <PostCard post={post} />
             </div>
