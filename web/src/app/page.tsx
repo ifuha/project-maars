@@ -4,7 +4,7 @@ import { getPosts } from "@/lib/api/post";
 import PostCard from "@/components/PostCard";
 import { Post } from "@/lib/api/type";
 import { useEffect, useState } from "react";
-import MarsWeather from "@/components/marsWeather";
+import SecondBar from "@/components/secondBar";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -45,7 +45,7 @@ export default function Home() {
 
       <div className="hidden md:block w-80 relative">
         <div className="fixed top-8 right-8 w-72">
-          <MarsWeather />
+          <SecondBar />
         </div>
       </div>
     </div>
