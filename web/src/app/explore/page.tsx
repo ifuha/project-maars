@@ -25,41 +25,39 @@ function ExplorePage() {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="border-r border-orange-100 border-l p-4">
-        <div className="flex flex-col gap-4 p-4">
-          <div className="flex flex-wrap gap-2">
-            <input
-              type="text"
-              placeholder="タグを検索"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="border border-orange-400 rounded-2xl p-2 w-full"
-            />
-            {search &&
-              filteredTags.map((tag) => (
-                <button
-                  key={tag.tagId}
-                  onClick={() => {
-                    setSelectedTagId(tag.tagId);
-                    setSearch("");
-                  }}
-                  className={`px-3 py-1 rounded-full border text-sm ${
-                    selectedTagId === tag.tagId
-                      ? "bg-orange-400 text-white"
-                      : "border-orange-400"
-                  }`}
-                >
-                  {tag.name}
-                </button>
-              ))}
-          </div>
-          <div className="flex flex-col gap-4">
-            {posts.map((post) => (
-              <div key={post.postId} className="py-2">
-                <PostCard post={post} />
-              </div>
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-wrap gap-2">
+          <input
+            type="text"
+            placeholder="タグを検索"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border border-orange-400 rounded-2xl p-2 w-full"
+          />
+          {search &&
+            filteredTags.map((tag) => (
+              <button
+                key={tag.tagId}
+                onClick={() => {
+                  setSelectedTagId(tag.tagId);
+                  setSearch("");
+                }}
+                className={`px-3 py-1 rounded-full border text-sm ${
+                  selectedTagId === tag.tagId
+                    ? "bg-orange-400 text-white"
+                    : "border-orange-400"
+                }`}
+              >
+                {tag.name}
+              </button>
             ))}
-          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          {posts.map((post) => (
+            <div key={post.postId} className="py-2">
+              <PostCard post={post} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
