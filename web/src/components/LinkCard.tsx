@@ -37,9 +37,9 @@ export default function LinkCard({ url }: Props) {
 
   return (
     <a href={url} target="_blank" rel="noopener noreferrer">
-      <div className="border-b border-orange-100 overflow-hidden flex gap-4">
+      <div className="border-b border-orange-200 overflow-hidden flex gap-4">
         {ogp.image && (
-          <div className="relative w-32 h-24 flex-shrink-0">
+          <div className="relative w-32 h-24 shrink-0">
             <Image
               src={ogp.image}
               alt={ogp.title}
