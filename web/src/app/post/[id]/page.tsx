@@ -193,7 +193,7 @@ export default function PostPage() {
         <div className="text-xl font-bold">コメント</div>
         <div className="w-full max-w-2xl flex flex-col gap-4">
           {userId && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 pb-12">
               <input
                 type="text"
                 placeholder="コメントを入力"
