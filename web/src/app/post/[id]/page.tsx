@@ -110,7 +110,7 @@ export default function PostPage() {
 
   return (
     <div>
-      <div className="ml-48 flex flex-col items-start p-8 gap-3">
+      <div className="md:ml-48 flex flex-col items-start p-8 gap-3">
         <Link href={`/user/${post.user.userId}`}>
           <div className="flex items-center gap-2">
             <div className="rounded-full overflow-hidden w-10 h-10 relative">
