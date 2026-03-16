@@ -210,26 +210,28 @@ export default function PostPage() {
             </div>
           )}
           {comments.map((comment) => (
-            <div
-              key={comment.commentId}
-              className="border-b border-orange-400 py-2"
-            >
-              <div className="flex items-center gap-4 py-4">
-                <div className="rounded-full overflow-hidden w-10 h-10 relative">
-                  <Image
-                    src={comment.user?.icon || "/rocket.svg"}
-                    alt="UserIcon"
-                    fill
-                    className="object-cover"
-                  />
+            <div className="pb-12">
+              <div
+                key={comment.commentId}
+                className="border-b border-orange-400 py-2"
+              >
+                <div className="flex items-center gap-4 py-4">
+                  <div className="rounded-full overflow-hidden w-10 h-10 relative">
+                    <Image
+                      src={comment.user?.icon || "/rocket.svg"}
+                      alt="UserIcon"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div>{comment.user?.name}</div>
                 </div>
-                <div>{comment.user?.name}</div>
+                <div>{comment.content}</div>
               </div>
-              <div>{comment.content}</div>
             </div>
           ))}
-          {error && <p className="text-red-400">{error}</p>}
         </div>
+        {error && <p className="text-red-400">{error}</p>}
       </div>
       {isOpen && post.thumbnail && (
         <div
