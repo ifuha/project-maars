@@ -32,7 +32,7 @@ export default function UserPage() {
   return (
     <div>
       <div className="flex flex-col items-center gap-8">
-        <div className="border-r border-l border-orange-100 p-4 min-h-screen">
+        <div className="border-r border-l border-orange-100 p-4 min-h-screen w-120">
           <div className="py-4">
             {user.header && (
               <Image
@@ -40,7 +40,7 @@ export default function UserPage() {
                 alt="header"
                 width={600}
                 height={300}
-                className="w-full object-cover h-48 rounded-2xl"
+                className="object-cover h-48 rounded-2xl"
               />
             )}
           </div>
