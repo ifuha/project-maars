@@ -142,15 +142,21 @@ export default function SideBar() {
             <Image src="/post.svg" alt="post" width={32} height={32} />
           </Link>
         )}
-        {userId ? (
-          <button onClick={handleLogout}>
-            <Image src="/log-out.svg" alt="logout" width={32} height={32} />
-          </button>
-        ) : (
-          <Link href="/login">
-            <Image src="/log-in.svg" alt="login" width={32} height={32} />
-          </Link>
-        )}
+        <Link href={`/user/${userId}`}>
+          {user && (
+            <div className="flex items-center gap-2 py-4">
+              <div className="rounded-full overflow-hidden w-10 h-10">
+                <Image
+                  src={user.icon || "/rocket.svg"}
+                  alt="Icon"
+                  width={40}
+                  height={40}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
+          )}
+        </Link>
       </div>
     </>
   );
