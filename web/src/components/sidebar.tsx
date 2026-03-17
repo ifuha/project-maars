@@ -142,8 +142,8 @@ export default function SideBar() {
             <Image src="/post.svg" alt="post" width={32} height={32} />
           </Link>
         )}
-        <Link href={`/user/${userId}`}>
-          {user && (
+        {user ? (
+          <Link href={`/user/${userId}`}>
             <div className="flex items-center gap-2 py-4">
               <div className="rounded-full overflow-hidden w-10 h-10">
                 <Image
@@ -155,8 +155,14 @@ export default function SideBar() {
                 />
               </div>
             </div>
-          )}
-        </Link>
+          </Link>
+        ) : (
+          <Link href="/login">
+            <div className="flex items-center">
+              <Image src="/log-in.svg" alt="login" width={32} height={32} />
+            </div>
+          </Link>
+        )}
       </div>
     </>
   );
