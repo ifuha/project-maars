@@ -92,7 +92,7 @@ export default function PostCard({ post, onDelete }: Props) {
   }, [isMenuOpen]);
 
   return (
-    <div className="border-b border-orange-400">
+    <div className="border-b border-orange-400 hover:bg-gray-50 p-2 duration-200">
       <div className="flex flex-col items-start justify-start gap-4 rounded-2xl">
         <div className="flex justify-between w-full">
           <Link href={`/user/${post.user.userId}`}>
