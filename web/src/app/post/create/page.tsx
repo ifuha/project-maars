@@ -133,7 +133,7 @@ function CreatePostPage() {
               />
             </div>
             <div className="flex items-center gap-4">
-              <div className="font-bold">{isPrivate ? "非公開" : "公開"}</div>
+              {/* <div className="font-bold">{isPrivate ? "非公開" : "公開"}</div>      公開非公開追加しても見れないから見れるようにしてから実装
               <div
                 onClick={() => setIsPrivate(!isPrivate)}
                 className={`relative w-12 h-6 rounded-full cursor-pointer transition-colors ${
@@ -145,7 +145,7 @@ function CreatePostPage() {
                     isPrivate ? "translate-x-1" : "translate-x-7"
                   }`}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="flex items-center gap-4">
               <input

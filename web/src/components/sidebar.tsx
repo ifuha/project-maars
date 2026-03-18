@@ -149,8 +149,8 @@ export default function SideBar() {
                 <Image
                   src={user.icon || "/rocket.svg"}
                   alt="Icon"
-                  width={40}
-                  height={40}
+                  width={32}
+                  height={32}
                   className="object-cover w-full h-full"
                 />
               </div>
