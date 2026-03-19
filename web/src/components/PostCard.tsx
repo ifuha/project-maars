@@ -95,8 +95,8 @@ export default function PostCard({ post, onDelete }: Props) {
     <div className="border-b border-orange-400 hover:bg-gray-50 p-2 duration-200">
       <div className="flex flex-col items-start justify-start gap-4 rounded-2xl">
         <div className="flex justify-between w-full">
-          <Link href={`/user/${post.user.userId}`}>
-            <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <Link href={`/user/${post.user.userId}`}>
               <div className="me-4">
                 <div className="rounded-full overflow-hidden w-10 h-10">
                   <Image
@@ -108,9 +108,9 @@ export default function PostCard({ post, onDelete }: Props) {
                   />
                 </div>
               </div>
-              {post.user.name}
-            </div>
-          </Link>
+            </Link>
+            {post.user.name}
+          </div>
           <div className="relative flex justify-end items-center">
             {userId === post.user.userId && (
               <Image
