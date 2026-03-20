@@ -109,7 +109,12 @@ export default function PostCard({ post, onDelete }: Props) {
                 </div>
               </div>
             </Link>
-            {post.user.name}
+            <div className="flex items-center gap-1">
+              <div className="font-black">{post.user.name}</div>
+              <div className="text-gray-500 text-[12px]">
+                {"@" + post.user.handle}
+              </div>
+            </div>
           </div>
           <div className="relative flex justify-end items-center">
             {userId === post.user.userId && (
