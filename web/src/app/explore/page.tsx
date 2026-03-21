@@ -49,7 +49,7 @@ function ExplorePage() {
                     : "border-orange-400"
                 }`}
               >
-                {tag.name}
+                <div className="text-nowrap">{tag.name}</div>
               </button>
             ))}
         </div>
