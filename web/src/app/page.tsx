@@ -30,7 +30,7 @@ export default function Home() {
           Home
         </div>
         <div className="flex items-start mb-12 gap-2">
-          {tags.map((tag) => (
+          {tags.slice(0, 8).map((tag) => (
             <button
               key={tag.tagId}
               onClick={() => {
