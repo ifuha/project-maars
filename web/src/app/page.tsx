@@ -25,12 +25,12 @@ export default function Home() {
 
   return (
     <div className="flex md:ml-64 min-h-screen mb-16 md:mb-0">
-      <div className="flex-1 flex flex-col p-4 md:p-8 gap-12">
-        <div className="text-xl font-black border-b border-orange-400 py-4">
+      <div className="flex-1 flex flex-col p-4 md:p-8 gap-6">
+        <div className="text-xl font-black border-b border-orange-400 py-2">
           Home
         </div>
-        <div className="flex items-start mb-12 gap-2">
-          {tags.map((tag) => (
+        <div className="flex items-start gap-2">
+          {tags.slice(0, 8).map((tag) => (
             <button
               key={tag.tagId}
               onClick={() => {
