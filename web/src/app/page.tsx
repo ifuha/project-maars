@@ -36,7 +36,7 @@ export default function Home() {
               onClick={() => {
                 setSelectedTagId(tag.tagId);
               }}
-              className={`px-3 py-1 rounded-full border text-sm ${
+              className={`px-3 py-1 rounded-full border text-sm hover:bg-gray-50 ${
                 selectedTagId === tag.tagId
                   ? "bg-orange-400 text-white"
                   : "border-orange-400"
