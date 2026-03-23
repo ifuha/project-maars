@@ -210,11 +210,8 @@ export default function PostPage() {
             </div>
           )}
           {comments.map((comment) => (
-            <div className="pb-12">
-              <div
-                key={comment.commentId}
-                className="border-b border-orange-400 py-2"
-              >
+            <div key={comment.commentId} className="pb-12">
+              <div className="border-b border-orange-400 py-2">
                 <div className="flex items-center gap-4 py-4">
                   <div className="rounded-full overflow-hidden w-10 h-10 relative">
                     <Image
