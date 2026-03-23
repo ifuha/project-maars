@@ -58,7 +58,7 @@ export default function UserPage() {
             <div className="text-2xl font-bold flex items-center gap-2">
               {user.name}
               <div>
-                <Link href={`/user/edit`}>
+                <Link href={"/user/edit"}>
                   <Image
                     src={"/pen-line.svg"}
                     alt="edit"
