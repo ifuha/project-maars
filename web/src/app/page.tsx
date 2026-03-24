@@ -5,6 +5,7 @@ import { getTags } from "@/lib/api/tag";
 import PostCard from "@/components/PostCard";
 import { Post, Tag } from "@/lib/api/type";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import SecondBar from "@/components/secondBar";
 
 export default function Home() {
@@ -47,6 +48,12 @@ export default function Home() {
           ))}
         </div>
         <div className="flex flex-col gap-2">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="text-red-400">このサービスは終了しました</div>
+            <Link href={"https://github.com/ifuha/project-maars"}>
+              ここからgithubを確認
+            </Link>
+          </div>
           {loading
             ? Array.from({ length: 5 }).map((_, i) => (
                 <div
