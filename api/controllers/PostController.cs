@@ -61,7 +61,7 @@ public class PostController : ControllerBase
       .ToListAsync();
   }
   [Authorize]
-  [HttpPost]
+  [HttpPost] 
   public async Task<ActionResult<Post>> CreatePost(Post dto)
   {
     var post = new Post
@@ -90,7 +90,7 @@ public class PostController : ControllerBase
       {
         if (!_context.Posts.Any(p => p.PostId == id)) return NotFound();
         throw;
-      }
+      } 
     return NoContent();
   }
   [Authorize]
